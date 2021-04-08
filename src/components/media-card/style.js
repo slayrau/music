@@ -1,0 +1,53 @@
+import styled from 'styled-components/macro';
+import { textEllipsis } from 'src/styled/helpers';
+
+const Card = styled.div`
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: calc(var(--gutter) / 2);
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 8px;
+  background-color: var(--background-secondary);
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    margin: 1px;
+    border-radius: inherit;
+  }
+`;
+
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+`;
+
+const Name = styled.span`
+  ${textEllipsis};
+`;
+
+const ArtistName = styled.span`
+  ${textEllipsis};
+
+  color: var(--label-color-secondary);
+  font-size: var(--font-size-subhead);
+  line-height: var(--line-height-subhead);
+`;
+
+export {
+  Card,
+  ImageWrapper,
+  Body,
+  Name,
+  ArtistName,
+};
