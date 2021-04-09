@@ -1,9 +1,12 @@
 import styled from 'styled-components/macro';
-import { resetList } from 'src/styled/helpers';
+import 'swiper/swiper.min.css';
+import { resetList, textEllipsis } from 'src/styled/helpers';
 
 const Section = styled.section`
   position: relative;
-  padding: var(--gutter);
+  padding-bottom: var(--gutter);
+  min-width: 0;
+  overflow: hidden;
 
   &::after {
     content: '';
@@ -14,33 +17,38 @@ const Section = styled.section`
     height: 1px;
     background-color: var(--background-separator);
   }
+
+  .swiper-wrapper {
+    ${resetList};
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(${(props) => props.rows}, 1fr);
+    padding: 0 var(--gutter);
+    row-gap: var(--gutter);
+  }
+
+  .swiper-slide {
+    margin-top: 0 !important;
+    padding-right: calc(var(--gutter) * 2);
+  }
 `;
 
 const Header = styled.div`
-  padding-bottom: var(--gutter);
+  padding: var(--gutter);
 `;
 
 const Title = styled.h2`
+  ${textEllipsis};
+
   margin: 0;
 `;
 
 const Body = styled.div``;
-
-const List = styled.ul`
-  ${resetList};
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`;
-
-const Item = styled.li``;
 
 export {
   Section,
   Header,
   Title,
   Body,
-  List,
-  Item,
 };

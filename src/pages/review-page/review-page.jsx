@@ -29,7 +29,11 @@ const ReviewPage = () => {
       </PageHeader>
 
       <Main>
-        <MediaGrid title="New Releases">
+        <MediaGrid
+          title="New Releases"
+          rows={2}
+          columns={2}
+        >
           {newReleases.items.map((album) => (
             <MediaCard
               key={album.id}
@@ -42,7 +46,11 @@ const ReviewPage = () => {
           ))}
         </MediaGrid>
 
-        <MediaGrid title={featuredPlaylists.message}>
+        <MediaGrid
+          title={`Playlists: ${featuredPlaylists.message}`}
+          rows={1}
+          columns={2}
+        >
           {featuredPlaylists.items.map((playlist) => (
             <MediaCard
               key={playlist.id}

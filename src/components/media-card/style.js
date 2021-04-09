@@ -33,6 +33,7 @@ const ImageWrapper = styled.div`
   padding-top: 100%;
   border-radius: 8px;
   background-color: var(--background-secondary);
+  box-shadow: inset 0 0 0 1px var(--background-separator);
 
   img {
     position: absolute;
