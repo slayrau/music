@@ -12,7 +12,15 @@ const textEllipsis = css`
   white-space: nowrap;
 `;
 
+const lineClamp = (count) => css`
+  display: -webkit-box;
+  -webkit-line-clamp: ${count};
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+`;
+
 export {
   resetList,
   textEllipsis,
+  lineClamp,
 };

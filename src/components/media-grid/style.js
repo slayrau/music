@@ -2,7 +2,18 @@ import styled from 'styled-components/macro';
 import { resetList } from 'src/styled/helpers';
 
 const Section = styled.section`
+  position: relative;
   padding: var(--gutter);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 0;
+    height: 1px;
+    background-color: var(--background-separator);
+  }
 `;
 
 const Header = styled.div`
