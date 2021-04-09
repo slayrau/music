@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authorize, selectAuth } from 'src/slices/auth';
 
 import TabBar from 'src/components/tab-bar';
+
 import ReviewPage from 'src/pages/review-page';
+import CategoriesPage from 'src/pages/categories-page';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const App = () => {
         <TabBar />
 
         <Route exact path="/review" component={ReviewPage} />
+        <Route exact path="/categories" component={CategoriesPage} />
         <Redirect from="/" to="/review" />
       </div>
     );

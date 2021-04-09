@@ -6,7 +6,7 @@ import { getNewReleases, getFeaturedPlaylists, selectNewReleases, selectFeatured
 import MediaGrid from 'src/components/media-grid';
 import MediaCard from 'src/components/media-card';
 
-import { Page, PageHeader, Title, Main } from './style';
+import { Page, Header, Title, Main } from 'src/styled/shared';
 
 const ReviewPage = () => {
   const dispatch = useDispatch();
@@ -24,9 +24,9 @@ const ReviewPage = () => {
 
   return (
     <Page>
-      <PageHeader>
+      <Header>
         <Title>Review</Title>
-      </PageHeader>
+      </Header>
 
       <Main>
         <MediaGrid
