@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --gutter: 16px;
     --tab-bar-size: 50px;
+    --button-size: 44px;
 
     // FONT
     --font-size-large-title: 31px;
@@ -39,6 +40,23 @@ const GlobalStyles = createGlobalStyle`
     --background-separator: #323235;
 
     --system-accent: #34c759;
+
+    --system-darkcyan: #008b8b;
+    --system-darkgray: #a9a9a9;
+    --system-darksalmon: #e9967a;
+    --system-tan: #d2b48c;
+    --system-skyblue: #87ceeb;
+    --system-steelblue: #4682b4;
+    --system-coral: #ff7f50;
+    --system-darkseagreen: #8fbc8f;
+    --system-dodgerblue: #1e90ff;
+    --system-goldenrod: #daa520;
+    --system-hotpink: #ff69b4;
+    --system-indianred: #cd5c5c;
+    --system-salmon: #fa8072;
+    --system-seagreen: #2e8b57;
+    --system-blueviolet: #8a2be2;
+    --system-limegreen: #32cd32;
   }
 
   *,

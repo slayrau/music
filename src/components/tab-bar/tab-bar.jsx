@@ -10,6 +10,10 @@ const TabBar = () => {
           </Item>
 
           <Item>
+            <NavLink to="/categories">Categories</NavLink>
+          </Item>
+
+          <Item>
             <NavLink to="/search">Search</NavLink>
           </Item>
         </List>
