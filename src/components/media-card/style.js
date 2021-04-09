@@ -1,10 +1,30 @@
-import styled from 'styled-components/macro';
-import { textEllipsis } from 'src/styled/helpers';
+import styled, { css } from 'styled-components/macro';
+
+import MediaCardType from 'src/utils/constants/media-card-type';
+import { textEllipsis, lineClamp } from 'src/styled/helpers';
+
+const Subhead = styled.span`
+  color: var(--label-color-secondary);
+  font-size: var(--font-size-subhead);
+  line-height: var(--line-height-subhead);
+`;
 
 const Card = styled.div`
   display: grid;
   grid-auto-flow: row;
   row-gap: calc(var(--gutter) / 2);
+
+  ${(props) => props.type === MediaCardType.album && css`
+    ${Subhead} {
+      ${textEllipsis};
+    }
+  `}
+
+  ${(props) => props.type === MediaCardType.playlist && css`
+    ${Subhead} {
+      ${lineClamp(2)}
+    }
+  `}
 `;
 
 const ImageWrapper = styled.div`
@@ -36,18 +56,10 @@ const Name = styled.span`
   ${textEllipsis};
 `;
 
-const ArtistName = styled.span`
-  ${textEllipsis};
-
-  color: var(--label-color-secondary);
-  font-size: var(--font-size-subhead);
-  line-height: var(--line-height-subhead);
-`;
-
 export {
   Card,
   ImageWrapper,
   Body,
   Name,
-  ArtistName,
+  Subhead,
 };

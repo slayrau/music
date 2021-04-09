@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types';
 
-import { Card, ImageWrapper, Body, Name, ArtistName } from './style';
+import MediaCardType from 'src/utils/constants/media-card-type';
+import { Card, ImageWrapper, Body, Name, Subhead } from './style';
 
-const MediaCard = ({ id, type, image, name, artistName }) => {
+const MediaCard = ({ id, type, image, name, subhead }) => {
   return (
-    <Card>
+    <Card type={type}>
       <ImageWrapper>
         <img src={image} alt="" />
       </ImageWrapper>
 
       <Body>
         <Name>{name}</Name>
-        <ArtistName>{artistName}</ArtistName>
+        <Subhead>{subhead}</Subhead>
       </Body>
     </Card>
   );
@@ -19,10 +20,10 @@ const MediaCard = ({ id, type, image, name, artistName }) => {
 
 MediaCard.propTypes = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['album']).isRequired,
+  type: PropTypes.oneOf([MediaCardType.album, MediaCardType.playlist]).isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  artistName: PropTypes.string.isRequired,
+  subhead: PropTypes.string.isRequired,
 };
 
 export default MediaCard;

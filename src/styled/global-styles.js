@@ -38,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
     --background-transparent: #28282899;
     --background-separator: #323235;
 
-    --system-accent: #ff375f;
+    --system-accent: #34c759;
   }
 
   *,
