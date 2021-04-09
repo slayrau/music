@@ -1,23 +1,15 @@
-import albums from 'src/mocks/new-releases-albums';
+import { Route, Redirect } from 'react-router-dom';
 
-import MediaGrid from 'src/components/media-grid';
-import MediaCard from 'src/components/media-card';
+import TabBar from 'src/components/tab-bar';
+import ReviewPage from 'src/pages/review-page';
 
 const App = () => {
   return (
     <div>
-      <MediaGrid title="New Releases">
-        {albums.map((album) => (
-          <MediaCard
-            key={album.id}
-            id={album.id}
-            type={album.type}
-            image={album.images[1].url}
-            name={album.name}
-            artistName={album.artists[0].name}
-          />
-        ))}
-      </MediaGrid>
+      <TabBar />
+
+      <Route exact path="/review" component={ReviewPage} />
+      <Redirect from="/" to="/review" />
     </div>
   );
 };

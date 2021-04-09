@@ -1,0 +1,48 @@
+import { NavLink as RouterNavLink } from 'react-router-dom';
+import styled from 'styled-components/macro';
+import { resetList } from 'src/styled/helpers';
+
+const Header = styled.header`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: var(--background-transparent);
+  backdrop-filter: blur(20px);
+`;
+
+const Nav = styled.nav``;
+
+const List = styled.ul`
+  ${resetList};
+
+  display: flex;
+`;
+
+const Item = styled.li`
+  flex: 1;
+`;
+
+const NavLink = styled(RouterNavLink)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: var(--tab-bar-size);
+
+  color: var(--label-color-secondary);
+  text-decoration: none;
+
+  &.active {
+    color: var(--system-accent);
+  }
+`;
+
+export {
+  Header,
+  Nav,
+  List,
+  Item,
+  NavLink,
+};

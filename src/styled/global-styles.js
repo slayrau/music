@@ -4,6 +4,7 @@ import 'normalize.css';
 const GlobalStyles = createGlobalStyle`
   :root {
     --gutter: 16px;
+    --tab-bar-size: 50px;
 
     // FONT
     --font-size-large-title: 31px;
