@@ -42,6 +42,8 @@ const Title = styled.h2`
   ${textEllipsis};
 
   margin: 0;
+  font-size: var(--font-size-title-2);
+  line-height: var(--line-height-title-2);
 `;
 
 const Body = styled.div``;

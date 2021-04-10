@@ -13,6 +13,8 @@ const Card = styled.div`
   display: grid;
   grid-auto-flow: row;
   row-gap: calc(var(--gutter) / 2);
+  color: var(--label-color-primary);
+  text-decoration: none;
 
   ${(props) => props.type === MediaCardType.album && css`
     ${Subhead} {
