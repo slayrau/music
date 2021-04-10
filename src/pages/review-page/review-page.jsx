@@ -38,6 +38,7 @@ const ReviewPage = () => {
             <MediaCard
               key={album.id}
               id={album.id}
+              href={`/album/${album.id}`}
               type={album.type}
               image={album.images[1].url}
               name={album.name}
@@ -47,7 +48,7 @@ const ReviewPage = () => {
         </MediaGrid>
 
         <MediaGrid
-          title={`Playlists: ${featuredPlaylists.message}`}
+          title={featuredPlaylists.message}
           rows={1}
           columns={2}
         >
@@ -55,6 +56,7 @@ const ReviewPage = () => {
             <MediaCard
               key={playlist.id}
               id={playlist.id}
+              href="#"
               type={playlist.type}
               image={playlist.images[0].url}
               name={playlist.name}

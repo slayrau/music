@@ -1,27 +1,11 @@
-import axios from 'axios';
-
-const instance = axios.create({
-  baseURL: 'https://api.spotify.com/v1',
-});
+import instance, { getCredentials } from './instance';
 
 export default {
   getNewReleases: ({ tokenType, accessToken }) => (
-    instance.get('/browse/new-releases?country=US&limit=24', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `${tokenType} ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    instance.get('/browse/new-releases?country=US&limit=24', getCredentials({ tokenType, accessToken }))
   ),
 
   getFeaturedPlaylists: ({ tokenType, accessToken }) => (
-    instance.get('/browse/featured-playlists?country=US&limit=24', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `${tokenType} ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    instance.get('/browse/featured-playlists?country=US&limit=24', getCredentials({ tokenType, accessToken }))
   ),
 };
