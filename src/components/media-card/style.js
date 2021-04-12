@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/macro';
 
-import MediaCardType from 'src/utils/constants/media-card-type';
+import { MediaCardType, QuerySearchType } from 'src/utils/constants';
 import { textEllipsis, lineClamp } from 'src/styled/helpers';
 
 const Subhead = styled.span`
@@ -9,43 +9,35 @@ const Subhead = styled.span`
   line-height: var(--line-height-subhead);
 `;
 
-const Card = styled.div`
+const Card = styled.a`
   display: grid;
   grid-auto-flow: row;
   row-gap: calc(var(--gutter) / 2);
   color: var(--label-color-primary);
   text-decoration: none;
 
-  ${(props) => props.type === MediaCardType.album && css`
+  ${({ $cardType }) => $cardType === MediaCardType.album && css`
     ${Subhead} {
       ${textEllipsis};
     }
   `}
 
-  ${(props) => props.type === MediaCardType.playlist && css`
+  ${({ $cardType }) => $cardType === MediaCardType.playlist && css`
     ${Subhead} {
       ${lineClamp(2)}
     }
   `}
-`;
 
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-  border-radius: 8px;
-  background-color: var(--background-secondary);
-  box-shadow: inset 0 0 0 1px var(--background-separator);
+  ${({ $cardType, $queryType }) => $cardType === MediaCardType.search && css`
+    ${Subhead} {
+      ${$queryType === QuerySearchType.playlist ? lineClamp(2) : textEllipsis}
+    }
 
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
-    margin: 1px;
-    border-radius: inherit;
-  }
+    grid-auto-flow: column;
+    grid-template-columns: calc(var(--gutter) * ${($queryType === QuerySearchType.playlist || $queryType === QuerySearchType.artist) ? 4 : 3}) auto;
+    column-gap: var(--gutter);
+    align-items: center;
+  `}
 `;
 
 const Body = styled.div`
@@ -55,14 +47,23 @@ const Body = styled.div`
   overflow: hidden;
 `;
 
+const Row = styled.div`
+  display: flex;
+`;
+
 const Name = styled.span`
   ${textEllipsis};
 `;
 
+const Meta = styled(Subhead)`
+  position: relative;
+`;
+
 export {
   Card,
-  ImageWrapper,
   Body,
+  Row,
   Name,
+  Meta,
   Subhead,
 };

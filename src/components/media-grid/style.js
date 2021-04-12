@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import 'swiper/swiper.min.css';
 import { resetList, textEllipsis } from 'src/styled/helpers';
 
@@ -8,7 +8,7 @@ const Section = styled.section`
   min-width: 0;
   overflow: hidden;
 
-  &::after {
+  &:not(:last-child)::after {
     content: '';
     position: absolute;
     left: var(--gutter);
@@ -25,22 +25,40 @@ const Section = styled.section`
     grid-auto-flow: column;
     grid-template-rows: repeat(${(props) => props.rows}, 1fr);
     padding: 0 var(--gutter);
-    row-gap: var(--gutter);
   }
 
   .swiper-slide {
+    position: relative;
     margin-top: 0 !important;
+    padding: calc(var(--gutter) / 2) 0;
     padding-right: calc(var(--gutter) * 2);
+
+    ${(props) => props.rowSeparator && css`
+      &:not(:nth-child(${props.rows}n))::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: calc(48px + var(--gutter));
+        right: calc(var(--gutter) * 2);
+        height: 1px;
+        background-color: var(--background-separator);
+      }
+    `}
   }
 `;
 
 const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   padding: var(--gutter);
+  padding-bottom: calc(var(--gutter) / 2);
 `;
 
 const Title = styled.h2`
   ${textEllipsis};
 
+  flex: 1;
   margin: 0;
   font-size: var(--font-size-title-2);
   line-height: var(--line-height-title-2);

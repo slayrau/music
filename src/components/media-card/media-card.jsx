@@ -1,34 +1,52 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import MediaCardType from 'src/utils/constants/media-card-type';
+import { MediaCardType, QuerySearchType } from 'src/utils/constants';
 import Poster from 'src/components/poster';
-import { Card, Body, Name, Subhead } from './style';
+import { Card, Body, Row, Name, Meta, Subhead } from './style';
 
-const MediaCard = ({ id, href, type, image, name, subhead }) => {
+const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }) => {
   return (
     <Card
       as={Link}
       to={href}
-      type={type}
+      $cardType={cardType}
+      $queryType={queryType}
     >
-      <Poster src={image} />
+      <Poster
+        src={image}
+        circle={queryType === QuerySearchType.artist}
+      />
 
       <Body>
-        <Name>{name}</Name>
-        <Subhead>{subhead}</Subhead>
+        <Row>
+          <Name>{name}</Name>
+        </Row>
+        {subhead && (
+          <Row><Subhead>{subhead}</Subhead></Row>
+        )}
+        {meta && (
+          <Row><Meta>{meta}</Meta></Row>
+        )}
       </Body>
     </Card>
   );
 };
 
 MediaCard.propTypes = {
+  cardType: PropTypes.oneOf(Object.values(MediaCardType)).isRequired,
   id: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([MediaCardType.album, MediaCardType.playlist]).isRequired,
+  queryType: PropTypes.oneOf(Object.values(QuerySearchType)).isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  subhead: PropTypes.string.isRequired,
+  subhead: PropTypes.string,
+  meta: PropTypes.string,
+};
+
+MediaCard.defaultProps = {
+  subhead: '',
+  meta: '',
 };
 
 export default MediaCard;

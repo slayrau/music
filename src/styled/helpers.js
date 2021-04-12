@@ -19,8 +19,15 @@ const lineClamp = (count) => css`
   overflow: hidden;
 `;
 
+const resetButton = css`
+  padding: 0;
+  border: none;
+  background-color: transparent;
+`;
+
 export {
   resetList,
   textEllipsis,
   lineClamp,
+  resetButton,
 };
