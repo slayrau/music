@@ -7,6 +7,7 @@ import MediaGrid from 'src/components/media-grid';
 import MediaCard from 'src/components/media-card';
 
 import { Page, Header, Title, Main } from 'src/styled/shared';
+import { MediaCardType, QuerySearchType } from 'src/utils/constants';
 
 const ReviewPage = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const ReviewPage = () => {
               key={album.id}
               id={album.id}
               href={`/album/${album.id}`}
-              type={album.type}
+              cardType={MediaCardType.album}
+              queryType={QuerySearchType.album}
               image={album.images[1].url}
               name={album.name}
               subhead={album.artists[0].name}
@@ -57,7 +59,8 @@ const ReviewPage = () => {
               key={playlist.id}
               id={playlist.id}
               href="#"
-              type={playlist.type}
+              cardType={MediaCardType.playlist}
+              queryType={QuerySearchType.playlist}
               image={playlist.images[0].url}
               name={playlist.name}
               subhead={playlist.description}

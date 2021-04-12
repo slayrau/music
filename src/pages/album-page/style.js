@@ -28,7 +28,9 @@ const Row = styled.div``;
 const ArtistsList = styled.ul`
   ${resetList};
 
-  margin-bottom: calc(var(--gutter) / 2);
+  margin: calc(var(--gutter)) 0;
+  margin-top: var(--gutter);
+  margin-bottom: calc(var(--gutter) * 1.5);
 `;
 
 const Item = styled.li`
@@ -36,9 +38,11 @@ const Item = styled.li`
 `;
 
 const Artist = styled.a`
+  display: block;
   color: var(--system-accent);
   font-size: var(--font-size-title-1);
   line-height: var(--line-height-title-1);
+  text-align: center;
   text-decoration: none;
 `;
 

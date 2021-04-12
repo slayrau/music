@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 import { Section, Header, Title, Body } from './style';
 
-const MediaGrid = ({ children, rows, columns, title }) => {
+const MediaGrid = ({ children, rows, columns, rowSeparator, title }) => {
   return (
     <Section
       rows={rows}
       columns={columns}
+      rowSeparator={rowSeparator}
     >
       <Header>
         <Title>{title}</Title>
@@ -24,7 +25,7 @@ const MediaGrid = ({ children, rows, columns, title }) => {
           observeSlideChildren
         >
           {Children.map(children, (child) => (
-            <SwiperSlide>{child}</SwiperSlide>
+            <SwiperSlide tag="li">{child}</SwiperSlide>
           ))}
         </Swiper>
       </Body>
@@ -36,7 +37,12 @@ MediaGrid.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   columns: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  rowSeparator: PropTypes.bool,
   title: PropTypes.string.isRequired,
+};
+
+MediaGrid.defaultProps = {
+  rowSeparator: false,
 };
 
 export default MediaGrid;

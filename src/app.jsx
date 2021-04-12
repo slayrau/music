@@ -9,6 +9,7 @@ import TabBar from 'src/components/tab-bar';
 import ReviewPage from 'src/pages/review-page';
 import CategoriesPage from 'src/pages/categories-page';
 import AlbumPage from 'src/pages/album-page';
+import SearchPage from 'src/pages/search-page';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const App = () => {
         <Route exact path="/review" component={ReviewPage} />
         <Route exact path="/categories" component={CategoriesPage} />
         <Route exact path="/album/:albumId" component={AlbumPage} />
+        <Route exact path="/search" component={SearchPage} />
         <Redirect from="/" to="/review" />
       </div>
     );
