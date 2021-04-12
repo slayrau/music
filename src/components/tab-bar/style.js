@@ -26,12 +26,15 @@ const Item = styled.li`
 
 const NavLink = styled(RouterNavLink)`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: var(--tab-bar-size);
 
   color: var(--label-color-secondary);
+  font-size: var(--font-size-footnote);
+  line-height: var(--line-height-footnote);
   text-decoration: none;
 
   &.active {

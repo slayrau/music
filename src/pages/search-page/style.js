@@ -49,17 +49,20 @@ const TabItem = styled.li`
   display: block;
 `;
 
-const TabButton = styled.a`
+const TabButton = styled.button`
   display: flex;
   padding: calc(var(--gutter) / 2) var(--gutter);
   
   color: var(--label-color-secondary);
   text-decoration: none;
+  background-color: transparent;
+  border: none;
   border-radius: var(--gutter);
   white-space: nowrap;
+  outline: none;
 
   ${(props) => props.isActive && css`
-    color: var(--label-color-primary);
+    color: var(--background-primary);
     background-color: var(--system-accent);
   `}
 `;
@@ -87,14 +90,21 @@ const SearchItem = styled.li`
 const LoadMoreButton = styled.button`
   ${resetButton};
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc(100% - var(--gutter) * 2);
   height: var(--button-size);
   margin: var(--gutter);
   margin-top: var(--gutter);
 
-  color: var(--label-color-primary);
+  color: var(--background-primary);
   background-color: var(--system-accent);
   border-radius: var(--gutter);
+
+  &:disabled {
+    background-color: transparent;
+  }
 `;
 
 export {

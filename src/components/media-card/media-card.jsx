@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { MediaCardType, QuerySearchType } from 'src/utils/constants';
+import { MediaCardType, QuerySearchType, IconType } from 'src/utils/constants';
+
 import Poster from 'src/components/poster';
+import Icon from 'src/components/icon';
 import { Card, Body, Row, Name, Meta, Subhead } from './style';
 
 const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }) => {
@@ -16,6 +18,7 @@ const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }
       <Poster
         src={image}
         circle={queryType === QuerySearchType.artist}
+        placeholderType={queryType}
       />
 
       <Body>
@@ -29,6 +32,8 @@ const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }
           <Row><Meta>{meta}</Meta></Row>
         )}
       </Body>
+
+      {cardType === MediaCardType.search && <Icon className="chevron-icon" icon={IconType.chevronRight} />}
     </Card>
   );
 };

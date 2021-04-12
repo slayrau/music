@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import categories from 'src/utils/constants/categories';
+import { categories, IconType } from 'src/utils/constants';
+import Icon from 'src/components/icon';
 
 import { Page, Header, Title, Main } from 'src/styled/shared';
 import { GridList, Item, BubbleLink } from './style';
@@ -21,6 +22,7 @@ const CategoriesPage = () => {
                 to="#"
               >
                 {category.name}
+                <Icon icon={IconType.chevronRight} />
               </BubbleLink>
             </Item>
           ))}

@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
     --gutter: 16px;
     --tab-bar-size: 50px;
     --button-size: 44px;
+    --icon-size: 24px;
 
     // FONT
     --font-size-large-title: 31px;
@@ -39,7 +40,7 @@ const GlobalStyles = createGlobalStyle`
     --background-transparent: #28282899;
     --background-separator: #323235;
 
-    --system-accent: #34c759;
+    --system-accent: #1db954;
   }
 
   *,

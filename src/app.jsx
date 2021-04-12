@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { authorize, selectAuth } from 'src/slices/auth';
+import { useAuthorization } from 'src/hooks';
 
 import TabBar from 'src/components/tab-bar';
+import LaunchScreen from 'src/components/launch-screen';
 
 import ReviewPage from 'src/pages/review-page';
 import CategoriesPage from 'src/pages/categories-page';
@@ -12,34 +11,23 @@ import AlbumPage from 'src/pages/album-page';
 import SearchPage from 'src/pages/search-page';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const auth = useSelector(selectAuth);
+  const { loading, error } = useAuthorization();
 
-  useEffect(() => dispatch(authorize()), []);
-
-  if (auth.loading) {
-    return 'loading...';
+  if (loading) {
+    return <LaunchScreen />;
   }
 
-  if (auth.error) {
-    return auth.error.message;
-  }
+  return (
+    <div>
+      <TabBar />
 
-  if (auth.accessToken) {
-    return (
-      <div>
-        <TabBar />
-
-        <Route exact path="/review" component={ReviewPage} />
-        <Route exact path="/categories" component={CategoriesPage} />
-        <Route exact path="/album/:albumId" component={AlbumPage} />
-        <Route exact path="/search" component={SearchPage} />
-        <Redirect from="/" to="/review" />
-      </div>
-    );
-  }
-
-  return null;
+      <Route exact path="/review" component={ReviewPage} />
+      <Route exact path="/categories" component={CategoriesPage} />
+      <Route exact path="/album/:albumId" component={AlbumPage} />
+      <Route exact path="/search" component={SearchPage} />
+      <Redirect from="/" to="/review" />
+    </div>
+  );
 };
 
 export default App;

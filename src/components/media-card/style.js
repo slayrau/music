@@ -34,10 +34,14 @@ const Card = styled.a`
     }
 
     grid-auto-flow: column;
-    grid-template-columns: calc(var(--gutter) * ${($queryType === QuerySearchType.playlist || $queryType === QuerySearchType.artist) ? 4 : 3}) auto;
+    grid-template-columns: calc(var(--gutter) * 4) 1fr;
     column-gap: var(--gutter);
     align-items: center;
   `}
+
+  .chevron-icon {
+    color: var(--label-color-secondary);
+  }
 `;
 
 const Body = styled.div`

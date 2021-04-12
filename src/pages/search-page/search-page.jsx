@@ -20,6 +20,7 @@ import { getItemMeta, getItemSubhead, getItemImage } from 'src/utils/helpers/sea
 import SearchField from 'src/components/search-field';
 import MediaCard from 'src/components/media-card';
 import MediaGrid from 'src/components/media-grid';
+import PulseSpinner from 'src/components/pulse-spinner';
 
 import { Page, Main } from 'src/styled/shared';
 import { Header, TabsList, TabItem, TabButton, Content, SearchList, SearchItem, LoadMoreButton } from './style';
@@ -215,8 +216,9 @@ const SearchPage = () => {
                     type="button"
                     onClick={handleLoadMore}
                     disabled={loading}
+                    aria-label={loading ? 'Loading' : 'Load more'}
                   >
-                    {loading ? 'Loading...' : 'Load more'}
+                    {loading ? <PulseSpinner /> : 'Load more'}
                   </LoadMoreButton>
                 )}
               </Content>

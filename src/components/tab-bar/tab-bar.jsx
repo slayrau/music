@@ -1,3 +1,6 @@
+import IconType from 'src/utils/constants/icon-type';
+import Icon from 'src/components/icon';
+
 import { Header, Nav, List, Item, NavLink } from './style';
 
 const TabBar = () => {
@@ -6,15 +9,24 @@ const TabBar = () => {
       <Nav>
         <List>
           <Item>
-            <NavLink to="/review">Review</NavLink>
+            <NavLink to="/review">
+              <Icon icon={IconType.grid} />
+              Review
+            </NavLink>
           </Item>
 
           <Item>
-            <NavLink to="/categories">Categories</NavLink>
+            <NavLink to="/categories">
+              <Icon icon={IconType.lines} />
+              Categories
+            </NavLink>
           </Item>
 
           <Item>
-            <NavLink to="/search">Search</NavLink>
+            <NavLink to="/search">
+              <Icon icon={IconType.search} />
+              Search
+            </NavLink>
           </Item>
         </List>
       </Nav>

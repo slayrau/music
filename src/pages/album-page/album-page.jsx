@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 
 import { getAlbum, selectAlbum } from 'src/slices/album';
+
+import { QuerySearchType } from 'src/utils/constants';
 import { convertMsToUTCTime, getHumanReadableTime } from 'src/utils/helpers';
 
+import ScreenSpinner from 'src/components/screen-spinner';
 import Poster from 'src/components/poster';
 import Track from 'src/components/track';
 
@@ -21,7 +24,7 @@ const AlbumPage = () => {
   }, []);
 
   if (album.loading) {
-    return 'loading...';
+    return <ScreenSpinner />;
   }
 
   const { id, uri, type, name, releaseDate, totalTracks, spotifyUrl, artists, image, copyrights, tracks } = album.data;
@@ -35,7 +38,7 @@ const AlbumPage = () => {
       <Main>
         <AlbumHeader>
           <PosterWrapper>
-            <Poster src={image} />
+            <Poster src={image} placeholderType={QuerySearchType.album} />
           </PosterWrapper>
 
           <MetaData>

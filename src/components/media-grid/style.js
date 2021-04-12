@@ -38,7 +38,8 @@ const Section = styled.section`
         content: '';
         position: absolute;
         bottom: 0;
-        left: calc(48px + var(--gutter));
+        /* left: calc(48px + var(--gutter)); */
+        left: 0;
         right: calc(var(--gutter) * 2);
         height: 1px;
         background-color: var(--background-separator);

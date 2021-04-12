@@ -1,9 +1,19 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Wrapper } from './style';
+import { QuerySearchType, IconType } from 'src/utils/constants';
+import Icon from 'src/components/icon';
 
-const Poster = ({ src, alt, circle }) => {
+import { Wrapper, Placeholder } from './style';
+
+const placeholderIcons = {
+  [QuerySearchType.artist]: IconType.person,
+  [QuerySearchType.album]: IconType.musicBeamNote,
+  [QuerySearchType.track]: IconType.musicCrotchetNote,
+  [QuerySearchType.playlist]: IconType.musicList,
+};
+
+const Poster = ({ src, alt, circle, placeholderType }) => {
   const [imageError, setImageError] = useState(!src);
 
   const handleError = () => {
@@ -13,6 +23,9 @@ const Poster = ({ src, alt, circle }) => {
   return (
     <Wrapper circle={circle}>
       {!imageError && <img src={src} alt={alt} onError={handleError} />}
+      <Placeholder>
+        <Icon icon={placeholderIcons[placeholderType]} />
+      </Placeholder>
     </Wrapper>
   );
 };
@@ -21,6 +34,7 @@ Poster.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string,
   circle: PropTypes.bool,
+  placeholderType: PropTypes.oneOf(Object.values(QuerySearchType)).isRequired,
 };
 
 Poster.defaultProps = {

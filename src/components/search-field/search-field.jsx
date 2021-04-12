@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { setQueryTerm, resetSearchData } from 'src/slices/search';
+
+import IconType from 'src/utils/constants/icon-type';
+import Icon from 'src/components/icon';
+
 import { SearchWrapper, Label, Input, ClearButton, CancelButton } from './style';
 
 const SearchField = () => {
@@ -62,7 +66,7 @@ const SearchField = () => {
           name="search"
           autoComplete="off"
           spellCheck="false"
-          placeholder="Search..."
+          placeholder="Search"
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -70,12 +74,15 @@ const SearchField = () => {
           ref={inputRef}
         />
 
+        <Icon className="search-icon" icon={IconType.search} />
+
         {searchValue && (
           <ClearButton
             type="button"
             onClick={handleClear}
+            aria-label="Clear search field"
           >
-            x
+            <Icon icon={IconType.xmarkCircleFill} />
           </ClearButton>
         )}
       </Label>

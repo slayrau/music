@@ -5,6 +5,7 @@ import { getNewReleases, getFeaturedPlaylists, selectNewReleases, selectFeatured
 
 import MediaGrid from 'src/components/media-grid';
 import MediaCard from 'src/components/media-card';
+import ScreenSpinner from 'src/components/screen-spinner';
 
 import { Page, Header, Title, Main } from 'src/styled/shared';
 import { MediaCardType, QuerySearchType } from 'src/utils/constants';
@@ -20,7 +21,7 @@ const ReviewPage = () => {
   }, []);
 
   if (newReleases.loading || featuredPlaylists.loading) {
-    return 'loading...';
+    return <ScreenSpinner />;
   }
 
   return (
