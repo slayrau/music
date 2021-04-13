@@ -1,7 +1,10 @@
-import instance, { getCredentials } from './instance';
+import instance from './instance';
 
 export default {
-  getAlbum: ({ albumId, tokenType, accessToken }) => (
-    instance.get(`/albums/${albumId}`, getCredentials({ tokenType, accessToken }))
+  getAlbum: (albumId, credentials) => (
+    instance.get(`/albums/${albumId}`, credentials)
+  ),
+  getAlbumTracks: (albumId, credentials) => (
+    instance.get(`/albums/${albumId}/tracks?limit=50`, credentials)
   ),
 };

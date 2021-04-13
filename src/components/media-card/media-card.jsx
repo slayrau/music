@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { MediaCardType, QuerySearchType, IconType } from 'src/utils/constants';
+import { CardType, QueryType, IconType } from 'src/utils/constants';
 
 import Poster from 'src/components/poster';
 import Icon from 'src/components/icon';
 import { Card, Body, Row, Name, Meta, Subhead } from './style';
 
-const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }) => {
+const MediaCard = ({ id, cardType, href, queryType, image, name, subhead, meta }) => {
   return (
     <Card
       as={Link}
@@ -17,7 +17,7 @@ const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }
     >
       <Poster
         src={image}
-        circle={queryType === QuerySearchType.artist}
+        circle={queryType === QueryType.artist}
         placeholderType={queryType}
       />
 
@@ -33,20 +33,22 @@ const MediaCard = ({ cardType, id, href, queryType, image, name, subhead, meta }
         )}
       </Body>
 
-      {cardType === MediaCardType.search && <Icon className="chevron-icon" icon={IconType.chevronRight} />}
+      {(cardType === CardType.search || queryType === QueryType.track) && (
+        <Icon className="chevron-icon" icon={IconType.chevronRight} />
+      )}
     </Card>
   );
 };
 
 MediaCard.propTypes = {
-  cardType: PropTypes.oneOf(Object.values(MediaCardType)).isRequired,
+  cardType: PropTypes.oneOf(Object.values(CardType)).isRequired,
   id: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
-  queryType: PropTypes.oneOf(Object.values(QuerySearchType)).isRequired,
+  queryType: PropTypes.oneOf(Object.values(QueryType)).isRequired,
   image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  subhead: PropTypes.string,
-  meta: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  subhead: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  meta: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 MediaCard.defaultProps = {

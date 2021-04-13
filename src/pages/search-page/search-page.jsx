@@ -15,9 +15,9 @@ import {
 
 import { useSearchParams } from 'src/hooks';
 
-import { MediaCardType, QuerySearchType } from 'src/utils/constants';
-import { QuerySearchTypeToResponseDataType } from 'src/utils/helpers';
-import { getItemMeta, getItemSubhead, getItemImage } from 'src/utils/helpers/search-page';
+import { CardType, QueryType } from 'src/utils/constants';
+import { QueryTypeToSearchDataType, getLowResImage, getMediumResImage } from 'src/utils/helpers/common';
+import * as cardHelpers from 'src/utils/helpers/media-card';
 
 import SearchField from 'src/components/search-field';
 import MediaCard from 'src/components/media-card';
@@ -28,10 +28,10 @@ import { Page, Main } from 'src/styled/shared';
 import { Header, TabsList, TabItem, TabButton, Content, SearchList, SearchItem, LoadMoreButtonWrapper, LoadMoreButton } from './style';
 
 const searchTabs = [
-  { id: QuerySearchType.artist, name: 'Artists' },
-  { id: QuerySearchType.album, name: 'Albums' },
-  { id: QuerySearchType.track, name: 'Tracks' },
-  { id: QuerySearchType.playlist, name: 'Playlists' },
+  { id: QueryType.artist, name: 'Artists' },
+  { id: QueryType.album, name: 'Albums' },
+  { id: QueryType.track, name: 'Tracks' },
+  { id: QueryType.playlist, name: 'Playlists' },
 ];
 
 const SearchPage = () => {
@@ -44,7 +44,7 @@ const SearchPage = () => {
   const playlists = useSelector(selectSearchPlaylists);
   const dispatch = useDispatch();
 
-  const currentDataType = QuerySearchTypeToResponseDataType[queryType];
+  const currentDataType = QueryTypeToSearchDataType[queryType];
   const currentTypedData = data[currentDataType];
 
   const handleTabClick = (event) => {
@@ -54,11 +54,7 @@ const SearchPage = () => {
   const handleLoadMore = (event) => {
     event.target.blur();
 
-    dispatch(loadMore({
-      queryTerm,
-      queryType,
-      queryOffset: currentTypedData.offset + currentTypedData.limit,
-    }));
+    dispatch(loadMore({ queryOffset: currentTypedData.limit + currentTypedData.offset }));
   };
 
   useEffect(() => {
@@ -109,7 +105,7 @@ const SearchPage = () => {
         {!queryType
           ? (
             <Content>
-              {artists.items.length > 0 && (
+              {!!artists.items.length && (
                 <MediaGrid
                   title="Artists"
                   rows={3}
@@ -120,18 +116,17 @@ const SearchPage = () => {
                     <MediaCard
                       key={artist.id}
                       id={artist.id}
-                      cardType={MediaCardType.search}
-                      queryType={QuerySearchType.artist}
-                      image={getItemImage(artist)}
+                      cardType={CardType.search}
+                      queryType={artist.queryType}
                       name={artist.name}
-                      subhead={getItemSubhead(artist)}
-                      href="#"
+                      image={getLowResImage(artist.images)}
+                      href={`/artist/${artist.id}`}
                     />
                   ))}
                 </MediaGrid>
               )}
 
-              {albums.items.length > 0 && (
+              {!!albums.items.length > 0 && (
                 <MediaGrid
                   title="Albums"
                   rows={2}
@@ -141,18 +136,18 @@ const SearchPage = () => {
                     <MediaCard
                       key={album.id}
                       id={album.id}
-                      cardType={MediaCardType.album}
-                      queryType={QuerySearchType.album}
-                      image={album.images[1].url}
+                      cardType={CardType.album}
+                      queryType={album.queryType}
                       name={album.name}
-                      subhead={getItemSubhead(album)}
+                      subhead={cardHelpers.getAllArtists(album.artist)}
+                      image={getMediumResImage(album.images)}
                       href={`/album/${album.id}`}
                     />
                   ))}
                 </MediaGrid>
               )}
 
-              {tracks.items.length > 0 && (
+              {!!tracks.items.length && (
                 <MediaGrid
                   title="Tracks"
                   rows={3}
@@ -163,19 +158,18 @@ const SearchPage = () => {
                     <MediaCard
                       key={track.id}
                       id={track.id}
-                      cardType={MediaCardType.search}
-                      queryType={QuerySearchType.track}
-                      image={getItemImage(track)}
+                      cardType={CardType.track}
+                      queryType={track.queryType}
                       name={track.name}
-                      subhead={getItemSubhead(track)}
-                      meta={getItemMeta(track)}
-                      href="#"
+                      subhead={cardHelpers.getAllArtists(track.artist)}
+                      image={getLowResImage(track.images)}
+                      href={`/album/${track.albumId}/${track.id}`}
                     />
                   ))}
                 </MediaGrid>
               )}
 
-              {playlists.items.length > 0 && (
+              {!!playlists.items.length && (
                 <MediaGrid
                   title="Playlists"
                   rows={1}
@@ -185,11 +179,11 @@ const SearchPage = () => {
                     <MediaCard
                       key={playlist.id}
                       id={playlist.id}
-                      cardType={MediaCardType.playlist}
-                      queryType={QuerySearchType.playlist}
-                      image={getItemImage(playlist)}
+                      cardType={CardType.playlist}
+                      queryType={playlist.queryType}
                       name={playlist.name}
-                      subhead={getItemSubhead(playlist)}
+                      subhead={playlist.description}
+                      image={getMediumResImage(playlist.images)}
                       href="#"
                     />
                   ))}
@@ -198,19 +192,19 @@ const SearchPage = () => {
             </Content>
           ) : (
             <Content>
-              {currentTypedData.items.length > 0 && (
+              {!!currentTypedData.items.length && (
                 <SearchList>
                   {currentTypedData.items.map((item) => (
                     <SearchItem key={item.id}>
                       <MediaCard
-                        cardType={MediaCardType.search}
+                        key={item.id}
                         id={item.id}
-                        queryType={item.type}
+                        cardType={CardType.search}
+                        queryType={item.queryType}
                         name={item.name}
-                        image={getItemImage(item)}
-                        subhead={getItemSubhead(item)}
-                        meta={getItemMeta(item)}
-                        href={item.type === QuerySearchType.album ? `/album/${item.id}` : '#'}
+                        subhead={cardHelpers.getSubhead(item)}
+                        image={getLowResImage(item.images)}
+                        href={cardHelpers.getUrl(item)}
                       />
                     </SearchItem>
                   ))}

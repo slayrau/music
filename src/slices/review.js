@@ -1,35 +1,44 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import ReviewApi from 'src/api/review';
+import getCredentials from 'src/utils/helpers/api/get-credentials';
+import { normalizeAlbum, normalizePlaylist } from 'src/utils/helpers/response';
 
 const getNewReleases = createAsyncThunk('review/getNewReleases', async (_, thunkApi) => {
-  const { tokenType, accessToken } = thunkApi.getState().auth;
-  const response = await ReviewApi.getNewReleases({ tokenType, accessToken });
-  const { items, total } = response.data.albums;
+  const credentials = getCredentials(thunkApi);
+  const response = await ReviewApi.getNewReleases(credentials);
+  const { albums } = response.data;
 
-  return { items, total };
+  return {
+    items: albums.items.map(normalizeAlbum),
+  };
 });
 
 const getFeaturedPlaylists = createAsyncThunk('review/getFeaturedPlaylists', async (_, thunkApi) => {
-  const { tokenType, accessToken } = thunkApi.getState().auth;
-  const response = await ReviewApi.getFeaturedPlaylists({ tokenType, accessToken });
-  const { message, playlists: { items, total } } = response.data;
+  const credentials = getCredentials(thunkApi);
+  const response = await ReviewApi.getFeaturedPlaylists(credentials);
+  const { message, playlists } = response.data;
 
-  return { message, items, total };
+  return {
+    items: playlists.items.map(normalizePlaylist),
+    message,
+  };
 });
 
 const initialState = {
   newReleases: {
-    items: [],
-    total: 0,
+    data: {
+      items: [],
+    },
     loading: true,
     error: null,
   },
 
   featuredPlaylists: {
-    message: '',
-    items: [],
-    total: 0,
+    data: {
+      message: '',
+      items: [],
+    },
     loading: true,
     error: null,
   },
@@ -43,8 +52,7 @@ const reviewSlice = createSlice({
       state.newReleases.loading = true;
     },
     [getNewReleases.fulfilled]: (state, action) => {
-      state.newReleases.items = action.payload.items;
-      state.newReleases.total = action.payload.total;
+      state.newReleases.data = action.payload;
       state.newReleases.loading = false;
       state.newReleases.error = null;
     },
@@ -57,9 +65,7 @@ const reviewSlice = createSlice({
       state.featuredPlaylists.loading = true;
     },
     [getFeaturedPlaylists.fulfilled]: (state, action) => {
-      state.featuredPlaylists.message = action.payload.message;
-      state.featuredPlaylists.items = action.payload.items;
-      state.featuredPlaylists.total = action.payload.total;
+      state.featuredPlaylists.data = action.payload;
       state.featuredPlaylists.loading = false;
       state.featuredPlaylists.error = null;
     },
