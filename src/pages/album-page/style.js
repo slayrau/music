@@ -80,7 +80,8 @@ const Content = styled.div`
 const TracksList = styled.ul`
   ${resetList};
 
-  margin-left: calc(var(--gutter) / 2 * -1);
+  margin-left: calc(var(--gutter) / -2);
+  margin-right: calc(var(--gutter) / -2);
 `;
 
 const TrackItem = styled.li`
@@ -90,8 +91,9 @@ const TrackItem = styled.li`
     content: '';
     position: absolute;
     left: calc(var(--gutter) * 3);
-    right: 0;
+    right: calc(var(--gutter) / 2);
     bottom: 0;
+    z-index: -1;
     height: 1px;
     background-color: var(--background-separator);
   }

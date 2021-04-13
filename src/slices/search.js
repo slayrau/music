@@ -2,25 +2,92 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import SearchApi from 'src/api/search';
 
-import { ResponseDataType } from 'src/utils/constants';
-import { QuerySearchTypeToResponseDataType } from 'src/utils/helpers';
+import getCredentials from 'src/utils/helpers/api/get-credentials';
+import { QueryType } from 'src/utils/constants';
+import { QueryTypeToSearchDataType } from 'src/utils/helpers/common';
+import { normalizeArtist, normalizeAlbum, normalizeTrack, normalizePlaylist } from 'src/utils/helpers/response';
+
+const QueryTypeToNormalizer = {
+  [QueryType.artist]: normalizeArtist,
+  [QueryType.album]: normalizeAlbum,
+  [QueryType.track]: normalizeTrack,
+  [QueryType.playlist]: normalizePlaylist,
+};
+
+const normalizeSearchData = (data, queryType) => {
+  const responseType = QueryTypeToSearchDataType[queryType];
+
+  if (!responseType) {
+    const { artists, albums, tracks, playlists } = data;
+
+    const normalizedArtists = {
+      items: artists.items.map(normalizeArtist),
+      offset: artists.offset,
+      limit: artists.limit,
+      next: artists.next,
+    };
+
+    const normalizedAlbums = {
+      items: albums.items.map(normalizeAlbum),
+      offset: albums.offset,
+      limit: albums.limit,
+      next: albums.next,
+    };
+
+    const normalizedTracks = {
+      items: tracks.items.map(normalizeTrack),
+      offset: tracks.offset,
+      limit: tracks.limit,
+      next: albums.next,
+    };
+
+    const normalizedPlaylists = {
+      items: playlists.items.map(normalizePlaylist),
+      offset: playlists.offset,
+      limit: playlists.limit,
+      next: playlists.next,
+    };
+
+    return {
+      responseType,
+      data: {
+        artists: normalizedArtists,
+        albums: normalizedAlbums,
+        tracks: normalizedTracks,
+        playlists: normalizedPlaylists,
+      },
+    };
+  }
+
+  const normalizer = QueryTypeToNormalizer[queryType];
+  const typedData = data[responseType];
+
+  return {
+    responseType,
+    data: {
+      items: typedData.items.map(normalizer),
+      limit: typedData.limit,
+      offset: typedData.offset,
+      next: typedData.next,
+    },
+  };
+};
 
 const getSearch = createAsyncThunk('search/getSearch', async ({ queryTerm, queryType }, thunkApi) => {
-  const { tokenType, accessToken } = thunkApi.getState().auth;
-  const response = await SearchApi.getSearch({ queryTerm, queryType, tokenType, accessToken });
-  const responseType = QuerySearchTypeToResponseDataType[queryType];
-  const data = responseType ? response.data[responseType] : response.data;
+  const credentials = getCredentials(thunkApi);
+  const response = await SearchApi.getSearch({ queryTerm, queryType }, credentials);
+  const normalizedData = normalizeSearchData(response.data, queryType);
 
-  return { data, responseType };
+  return normalizedData;
 });
 
-const loadMore = createAsyncThunk('search/loadMore', async ({ queryTerm, queryType, queryOffset }, thunkApi) => {
-  const { tokenType, accessToken } = thunkApi.getState().auth;
-  const response = await SearchApi.getSearch({ queryTerm, queryType, queryOffset, tokenType, accessToken });
-  const responseType = QuerySearchTypeToResponseDataType[queryType];
-  const data = responseType ? response.data[responseType] : response.data;
+const loadMore = createAsyncThunk('search/loadMore', async ({ queryOffset }, thunkApi) => {
+  const credentials = getCredentials(thunkApi);
+  const { queryTerm, queryType } = thunkApi.getState().search;
+  const response = await SearchApi.getSearch({ queryTerm, queryType, queryOffset }, credentials);
+  const normalizedData = normalizeSearchData(response.data, queryType);
 
-  return { data, responseType };
+  return normalizedData;
 });
 
 const initialState = {
@@ -29,25 +96,29 @@ const initialState = {
   loading: false,
   error: null,
   data: {
-    [ResponseDataType.artists]: {
+    artists: {
       items: [],
       offset: null,
       total: null,
+      next: null,
     },
-    [ResponseDataType.albums]: {
+    albums: {
       items: [],
       offset: null,
       total: null,
+      next: null,
     },
-    [ResponseDataType.tracks]: {
+    tracks: {
       items: [],
       offset: null,
       total: null,
+      next: null,
     },
-    [ResponseDataType.playlists]: {
+    playlists: {
       items: [],
       offset: null,
       total: null,
+      next: null,
     },
   },
 };
@@ -107,10 +178,10 @@ const searchSlice = createSlice({
 });
 
 export const selectSearch = (state) => state.search;
-export const selectSearchArtists = (state) => state.search.data[ResponseDataType.artists];
-export const selectSearchAlbums = (state) => state.search.data[ResponseDataType.albums];
-export const selectSearchTracks = (state) => state.search.data[ResponseDataType.tracks];
-export const selectSearchPlaylists = (state) => state.search.data[ResponseDataType.playlists];
+export const selectSearchArtists = (state) => state.search.data.artists;
+export const selectSearchAlbums = (state) => state.search.data.albums;
+export const selectSearchTracks = (state) => state.search.data.tracks;
+export const selectSearchPlaylists = (state) => state.search.data.playlists;
 export { getSearch, loadMore };
 export const { setQueryTerm, setQueryType, resetSearchData, resetSearch } = searchSlice.actions;
 export default searchSlice.reducer;

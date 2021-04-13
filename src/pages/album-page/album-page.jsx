@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 
-import { getAlbum, selectAlbum } from 'src/slices/album';
+import { getAlbum, getAlbumTracks, selectAlbum, selectAlbumTracks } from 'src/slices/album';
 
-import { QuerySearchType } from 'src/utils/constants';
-import { convertMsToUTCTime, getHumanReadableTime } from 'src/utils/helpers';
+import { QueryType } from 'src/utils/constants';
+import { convertMsToUTCTime, getHumanReadableTime, getMediumResImage } from 'src/utils/helpers/common';
 
 import ScreenSpinner from 'src/components/screen-spinner';
 import Poster from 'src/components/poster';
@@ -15,21 +15,23 @@ import { Page, Main } from 'src/styled/shared';
 import { AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Artist, Caption, Content, TracksList, TrackItem, SpotifyLink, Footer } from './style';
 
 const AlbumPage = () => {
-  const { albumId } = useParams();
+  const { albumId, trackId } = useParams();
   const dispatch = useDispatch();
   const album = useSelector(selectAlbum);
+  const tracks = useSelector(selectAlbumTracks);
 
   useEffect(() => {
     dispatch(getAlbum(albumId));
+    dispatch(getAlbumTracks(albumId));
   }, []);
 
-  if (album.loading) {
+  if (album.loading || tracks.loading) {
     return <ScreenSpinner />;
   }
 
-  const { id, uri, type, name, releaseDate, totalTracks, spotifyUrl, artists, image, copyrights, tracks } = album.data;
+  const { name, releaseDate, totalTracks, spotifyUrl, images, artists, copyrights } = album.data;
 
-  const totalTracksMs = tracks.reduce((acc, track) => { acc += track.duration_ms; return acc; }, 0);
+  const totalTracksMs = tracks.data.items.reduce((acc, track) => { acc += track.durationMs; return acc; }, 0);
   const totalTracksTime = convertMsToUTCTime(totalTracksMs);
   const albumDuration = getHumanReadableTime(totalTracksTime);
 
@@ -38,7 +40,7 @@ const AlbumPage = () => {
       <Main>
         <AlbumHeader>
           <PosterWrapper>
-            <Poster src={image} placeholderType={QuerySearchType.album} />
+            <Poster src={getMediumResImage(images)} placeholderType={QueryType.album} />
           </PosterWrapper>
 
           <MetaData>
@@ -52,7 +54,7 @@ const AlbumPage = () => {
                   <Item key={artist.id}>
                     <Artist
                       as={Link}
-                      to="#"
+                      to={`/artist/${artist.id}`}
                     >
                       {artist.name}
                     </Artist>
@@ -77,14 +79,15 @@ const AlbumPage = () => {
 
         <Content>
           <TracksList>
-            {tracks.map((track) => (
+            {tracks.data.items.map((track) => (
               <TrackItem key={track.id}>
                 <Track
                   id={track.id}
-                  trackNumber={track.track_number}
+                  trackNumber={track.trackNumber}
                   name={track.name}
                   artists={track.artists}
-                  duration={track.duration_ms}
+                  duration={track.durationMs}
+                  accent={track.id === trackId}
                 />
               </TrackItem>
             ))}

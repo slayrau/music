@@ -7,8 +7,9 @@ import LaunchScreen from 'src/components/launch-screen';
 
 import ReviewPage from 'src/pages/review-page';
 import CategoriesPage from 'src/pages/categories-page';
-import AlbumPage from 'src/pages/album-page';
 import SearchPage from 'src/pages/search-page';
+import AlbumPage from 'src/pages/album-page';
+import ArtistPage from 'src/pages/artist-page';
 
 const App = () => {
   const { loading, error } = useAuthorization();
@@ -23,8 +24,9 @@ const App = () => {
 
       <Route exact path="/review" component={ReviewPage} />
       <Route exact path="/categories" component={CategoriesPage} />
-      <Route exact path="/album/:albumId" component={AlbumPage} />
       <Route exact path="/search" component={SearchPage} />
+      <Route exact path="/album/:albumId/:trackId?" component={AlbumPage} />
+      <Route exact path="/artist/:artistId" component={ArtistPage} />
       <Redirect from="/" to="/review" />
     </div>
   );

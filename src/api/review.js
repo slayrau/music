@@ -1,11 +1,11 @@
-import instance, { getCredentials } from './instance';
+import instance from './instance';
 
 export default {
-  getNewReleases: ({ tokenType, accessToken }) => (
-    instance.get('/browse/new-releases?country=US&limit=24', getCredentials({ tokenType, accessToken }))
+  getNewReleases: (credentials) => (
+    instance.get('/browse/new-releases?country=US&limit=24', credentials)
   ),
 
-  getFeaturedPlaylists: ({ tokenType, accessToken }) => (
-    instance.get('/browse/featured-playlists?country=US&limit=24', getCredentials({ tokenType, accessToken }))
+  getFeaturedPlaylists: (credentials) => (
+    instance.get('/browse/featured-playlists?country=US&limit=24', credentials)
   ),
 };

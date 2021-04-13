@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 
-import { convertMsToUTCTime, getFormatedDuration } from 'src/utils/helpers';
+import { convertMsToUTCTime, getFormatedDuration } from 'src/utils/helpers/common';
 
 import { Wrapper, TrackNumber, Body, Name, Artists, Duration } from './style';
 
-const Track = ({ trackNumber, name, artists, duration }) => {
+const Track = ({ trackNumber, name, artists, duration, accent }) => {
   const convertedDuration = convertMsToUTCTime(duration);
   const formatedDuration = getFormatedDuration(convertedDuration);
 
   return (
-    <Wrapper>
+    <Wrapper accent={accent}>
       <TrackNumber>{trackNumber}</TrackNumber>
       <Body>
         <Name>{name}</Name>
@@ -25,6 +25,7 @@ Track.propTypes = {
   name: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
   artists: PropTypes.arrayOf(PropTypes.object),
+  accent: PropTypes.bool.isRequired,
 };
 
 Track.defaultProps = {

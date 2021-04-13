@@ -2,13 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getNewReleases, getFeaturedPlaylists, selectNewReleases, selectFeaturedPlaylists } from 'src/slices/review';
+import { CardType } from 'src/utils/constants';
+import { getAllArtists } from 'src/utils/helpers/media-card';
+import { getMediumResImage } from 'src/utils/helpers/common';
 
 import MediaGrid from 'src/components/media-grid';
 import MediaCard from 'src/components/media-card';
 import ScreenSpinner from 'src/components/screen-spinner';
 
 import { Page, Header, Title, Main } from 'src/styled/shared';
-import { MediaCardType, QuerySearchType } from 'src/utils/constants';
 
 const ReviewPage = () => {
   const dispatch = useDispatch();
@@ -36,35 +38,35 @@ const ReviewPage = () => {
           rows={2}
           columns={2}
         >
-          {newReleases.items.map((album) => (
+          {newReleases.data.items.map((album) => (
             <MediaCard
               key={album.id}
               id={album.id}
-              href={`/album/${album.id}`}
-              cardType={MediaCardType.album}
-              queryType={QuerySearchType.album}
-              image={album.images[1].url}
+              cardType={CardType.album}
+              queryType={album.queryType}
               name={album.name}
-              subhead={album.artists[0].name}
+              subhead={getAllArtists(album.artists)}
+              image={getMediumResImage(album.images)}
+              href={`/album/${album.id}`}
             />
           ))}
         </MediaGrid>
 
         <MediaGrid
-          title={featuredPlaylists.message}
+          title={featuredPlaylists.data.message}
           rows={1}
           columns={2}
         >
-          {featuredPlaylists.items.map((playlist) => (
+          {featuredPlaylists.data.items.map((playlist) => (
             <MediaCard
               key={playlist.id}
               id={playlist.id}
-              href="#"
-              cardType={MediaCardType.playlist}
-              queryType={QuerySearchType.playlist}
-              image={playlist.images[0].url}
+              cardType={CardType.playlist}
+              queryType={playlist.queryType}
               name={playlist.name}
               subhead={playlist.description}
+              image={getMediumResImage(playlist.images)}
+              href="#"
             />
           ))}
         </MediaGrid>
