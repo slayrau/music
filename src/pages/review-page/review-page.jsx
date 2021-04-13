@@ -66,7 +66,7 @@ const ReviewPage = () => {
               name={playlist.name}
               subhead={playlist.description}
               image={getMediumResImage(playlist.images)}
-              href="#"
+              href={`/playlist/${playlist.id}`}
             />
           ))}
         </MediaGrid>

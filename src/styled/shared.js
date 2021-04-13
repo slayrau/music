@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { textEllipsis } from 'src/styled/helpers';
+import { textEllipsis, resetList } from 'src/styled/helpers';
 
 const Page = styled.div`
   padding-bottom: var(--tab-bar-size);
@@ -30,9 +30,38 @@ const Header = styled.div`
 
 const Main = styled.main``;
 
+const TracksList = styled.ul`
+  ${resetList};
+
+  margin-left: calc(var(--gutter) / -2);
+  margin-right: calc(var(--gutter) / -2);
+`;
+
+const TrackItem = styled.li`
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--gutter) * 3);
+    right: calc(var(--gutter) / 2);
+    bottom: 0;
+    z-index: -1;
+    height: 1px;
+    background-color: var(--background-separator);
+  }
+`;
+
+const SpotifyLink = styled.a`
+  color: var(--system-accent);
+`;
+
 export {
   Page,
   Header,
   Title,
   Main,
+  TracksList,
+  TrackItem,
+  SpotifyLink,
 };

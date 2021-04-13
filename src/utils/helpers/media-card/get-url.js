@@ -16,6 +16,6 @@ export default (card) => {
   }
 
   if (queryType === QueryType.playlist) {
-    return '#';
+    return `/playlist/${id}`;
   }
 };
