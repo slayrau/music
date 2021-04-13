@@ -5,16 +5,27 @@ const SearchWrapper = styled.div`
   display: flex;
 `;
 
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
 const Label = styled.label`
   position: relative;
   flex: 1;
 
-  .search-icon {
+  ${IconWrapper} {
     position: absolute;
     top: 50%;
-    left: calc(var(--gutter) / 2);
-    padding: 2px;
-
+    left: 0;
     transform: translateY(-50%);
   }
 `;
@@ -25,7 +36,7 @@ const Input = styled.input`
   margin: 0;
   padding: 0 var(--gutter);
   padding-right: 36px;
-  padding-left: calc(var(--icon-size) + var(--gutter));
+  padding-left: 36px;
   padding-bottom: 2px;
   
   color: var(--label-color-primary);
@@ -52,7 +63,7 @@ const Input = styled.input`
     box-shadow: 0 0 0 4px var(--system-accent);
   }
 
-  &[value=""] + .icon {
+  &[value=""] + ${IconWrapper} .icon {
     color: var(--label-color-secondary);
   }
 `;
@@ -84,6 +95,7 @@ const CancelButton = styled.button`
 export {
   SearchWrapper,
   Label,
+  IconWrapper,
   Input,
   ClearButton,
   CancelButton,

@@ -21,11 +21,18 @@ const Poster = ({ src, alt, circle, placeholderType }) => {
   };
 
   return (
-    <Wrapper circle={circle}>
-      {!imageError && <img src={src} alt={alt} onError={handleError} />}
+    <Wrapper className="poster" circle={circle}>
       <Placeholder>
         <Icon icon={placeholderIcons[placeholderType]} />
       </Placeholder>
+
+      {!imageError && (
+        <img
+          src={src}
+          alt={alt}
+          onError={handleError}
+        />
+      )}
     </Wrapper>
   );
 };

@@ -13,6 +13,8 @@ import {
   resetSearch,
 } from 'src/slices/search';
 
+import { useSearchParams } from 'src/hooks';
+
 import { MediaCardType, QuerySearchType } from 'src/utils/constants';
 import { QuerySearchTypeToResponseDataType } from 'src/utils/helpers';
 import { getItemMeta, getItemSubhead, getItemImage } from 'src/utils/helpers/search-page';
@@ -23,7 +25,7 @@ import MediaGrid from 'src/components/media-grid';
 import PulseSpinner from 'src/components/pulse-spinner';
 
 import { Page, Main } from 'src/styled/shared';
-import { Header, TabsList, TabItem, TabButton, Content, SearchList, SearchItem, LoadMoreButton } from './style';
+import { Header, TabsList, TabItem, TabButton, Content, SearchList, SearchItem, LoadMoreButtonWrapper, LoadMoreButton } from './style';
 
 const searchTabs = [
   { id: QuerySearchType.artist, name: 'Artists' },
@@ -33,6 +35,8 @@ const searchTabs = [
 ];
 
 const SearchPage = () => {
+  useSearchParams();
+
   const { queryTerm, queryType, data, loading, error } = useSelector(selectSearch);
   const artists = useSelector(selectSearchArtists);
   const albums = useSelector(selectSearchAlbums);
@@ -105,7 +109,7 @@ const SearchPage = () => {
         {!queryType
           ? (
             <Content>
-              {artists.total && (
+              {artists.items.length > 0 && (
                 <MediaGrid
                   title="Artists"
                   rows={3}
@@ -120,13 +124,14 @@ const SearchPage = () => {
                       queryType={QuerySearchType.artist}
                       image={getItemImage(artist)}
                       name={artist.name}
+                      subhead={getItemSubhead(artist)}
                       href="#"
                     />
                   ))}
                 </MediaGrid>
               )}
 
-              {albums.total && (
+              {albums.items.length > 0 && (
                 <MediaGrid
                   title="Albums"
                   rows={2}
@@ -140,14 +145,14 @@ const SearchPage = () => {
                       queryType={QuerySearchType.album}
                       image={album.images[1].url}
                       name={album.name}
-                      subhead={album.artists.map((artist) => artist.name).join(', ')}
+                      subhead={getItemSubhead(album)}
                       href={`/album/${album.id}`}
                     />
                   ))}
                 </MediaGrid>
               )}
 
-              {tracks.total && (
+              {tracks.items.length > 0 && (
                 <MediaGrid
                   title="Tracks"
                   rows={3}
@@ -170,7 +175,7 @@ const SearchPage = () => {
                 </MediaGrid>
               )}
 
-              {playlists.total && (
+              {playlists.items.length > 0 && (
                 <MediaGrid
                   title="Playlists"
                   rows={1}
@@ -184,7 +189,7 @@ const SearchPage = () => {
                       queryType={QuerySearchType.playlist}
                       image={getItemImage(playlist)}
                       name={playlist.name}
-                      subhead={playlist.description}
+                      subhead={getItemSubhead(playlist)}
                       href="#"
                     />
                   ))}
@@ -192,8 +197,8 @@ const SearchPage = () => {
               )}
             </Content>
           ) : (
-            currentTypedData.total && (
-              <Content>
+            <Content>
+              {currentTypedData.items.length > 0 && (
                 <SearchList>
                   {currentTypedData.items.map((item) => (
                     <SearchItem key={item.id}>
@@ -210,8 +215,10 @@ const SearchPage = () => {
                     </SearchItem>
                   ))}
                 </SearchList>
+              )}
 
-                {currentTypedData.next && (
+              {currentTypedData.next && (
+                <LoadMoreButtonWrapper>
                   <LoadMoreButton
                     type="button"
                     onClick={handleLoadMore}
@@ -220,9 +227,9 @@ const SearchPage = () => {
                   >
                     {loading ? <PulseSpinner /> : 'Load more'}
                   </LoadMoreButton>
-                )}
-              </Content>
-            )
+                </LoadMoreButtonWrapper>
+              )}
+            </Content>
           )}
       </Main>
     </Page>

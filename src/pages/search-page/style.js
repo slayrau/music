@@ -75,16 +75,23 @@ const SearchList = styled.ul`
 
   display: flex;
   flex-direction: column;
+  margin-bottom: calc(var(--gutter) * 2);
   padding: 0 var(--gutter);
   border-bottom: 1px solid var(--background-separator);
 `;
 
 const SearchItem = styled.li`
   padding: calc(var(--gutter) / 2) 0;
-  
+
+
   &:not(:last-child) {
     border-bottom: 1px solid var(--background-separator);
   }
+`;
+
+const LoadMoreButtonWrapper = styled.div`
+  padding: var(--gutter);
+  margin-top: calc(var(--gutter) * -2);
 `;
 
 const LoadMoreButton = styled.button`
@@ -93,10 +100,8 @@ const LoadMoreButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(100% - var(--gutter) * 2);
+  width: 100%;
   height: var(--button-size);
-  margin: var(--gutter);
-  margin-top: var(--gutter);
 
   color: var(--background-primary);
   background-color: var(--system-accent);
@@ -115,5 +120,6 @@ export {
   Content,
   SearchList,
   SearchItem,
+  LoadMoreButtonWrapper,
   LoadMoreButton,
 };

@@ -8,8 +8,9 @@ const Header = styled.header`
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: var(--background-transparent);
+  background-color: var(--background-primary);
   backdrop-filter: blur(20px);
+  border-top: 1px solid var(--background-separator);
 `;
 
 const Nav = styled.nav``;

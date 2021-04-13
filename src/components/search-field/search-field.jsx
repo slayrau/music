@@ -1,17 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setQueryTerm, resetSearchData } from 'src/slices/search';
+import { setQueryTerm, resetSearchData, selectSearch } from 'src/slices/search';
+import { useQuery } from 'src/hooks';
 
 import IconType from 'src/utils/constants/icon-type';
 import Icon from 'src/components/icon';
+import PulseSpinner from 'src/components/pulse-spinner';
 
-import { SearchWrapper, Label, Input, ClearButton, CancelButton } from './style';
+import { SearchWrapper, IconWrapper, Label, Input, ClearButton, CancelButton } from './style';
 
 const SearchField = () => {
   const dispatch = useDispatch();
-  const [isActive, setIsActive] = useState('');
-  const [searchValue, setValue] = useState('');
+  const query = useQuery();
+  const { loading } = useSelector(selectSearch);
+
+  const term = query.get('term') || '';
+
+  const [searchValue, setValue] = useState(term);
+  const [isActive, setIsActive] = useState(!!term);
   const inputRef = useRef();
 
   const handleFocus = () => {
@@ -48,11 +55,13 @@ const SearchField = () => {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (isActive) {
+    let timeout;
+
+    if (isActive && searchValue) {
+      timeout = setTimeout(() => {
         dispatch(setQueryTerm(searchValue));
-      }
-    }, 500);
+      }, 500);
+    }
 
     return () => {
       clearTimeout(timeout);
@@ -74,7 +83,14 @@ const SearchField = () => {
           ref={inputRef}
         />
 
-        <Icon className="search-icon" icon={IconType.search} />
+        <IconWrapper>
+          {loading
+            ? (
+              <PulseSpinner size="small" />
+            ) : (
+              <Icon className="search-icon" icon={IconType.search} />
+            )}
+        </IconWrapper>
 
         {searchValue && (
           <ClearButton
