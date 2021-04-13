@@ -25,11 +25,12 @@ Track.propTypes = {
   name: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
   artists: PropTypes.arrayOf(PropTypes.object),
-  accent: PropTypes.bool.isRequired,
+  accent: PropTypes.bool,
 };
 
 Track.defaultProps = {
   artists: null,
+  accent: false,
 };
 
 export default Track;

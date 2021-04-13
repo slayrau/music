@@ -161,7 +161,7 @@ const SearchPage = () => {
                       cardType={CardType.track}
                       queryType={track.queryType}
                       name={track.name}
-                      subhead={cardHelpers.getAllArtists(track.artist)}
+                      subhead={cardHelpers.getAllArtists(track.artists)}
                       image={getLowResImage(track.images)}
                       href={`/album/${track.albumId}/${track.id}`}
                     />
@@ -184,7 +184,7 @@ const SearchPage = () => {
                       name={playlist.name}
                       subhead={playlist.description}
                       image={getMediumResImage(playlist.images)}
-                      href="#"
+                      href={`/playlist/${playlist.id}`}
                     />
                   ))}
                 </MediaGrid>

@@ -11,8 +11,8 @@ import ScreenSpinner from 'src/components/screen-spinner';
 import Poster from 'src/components/poster';
 import Track from 'src/components/track';
 
-import { Page, Main } from 'src/styled/shared';
-import { AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Artist, Caption, Content, TracksList, TrackItem, SpotifyLink, Footer } from './style';
+import { Page, Main, TracksList, TrackItem, SpotifyLink } from 'src/styled/shared';
+import { AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Artist, Caption, Content, Footer } from './style';
 
 const AlbumPage = () => {
   const { albumId, trackId } = useParams();

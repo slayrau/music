@@ -77,32 +77,6 @@ const Content = styled.div`
   }
 `;
 
-const TracksList = styled.ul`
-  ${resetList};
-
-  margin-left: calc(var(--gutter) / -2);
-  margin-right: calc(var(--gutter) / -2);
-`;
-
-const TrackItem = styled.li`
-  position: relative;
-
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: calc(var(--gutter) * 3);
-    right: calc(var(--gutter) / 2);
-    bottom: 0;
-    z-index: -1;
-    height: 1px;
-    background-color: var(--background-separator);
-  }
-`;
-
-const SpotifyLink = styled.a`
-  color: var(--system-accent);
-`;
-
 const Footer = styled.div`
   padding: var(--gutter);
 `;
@@ -118,8 +92,5 @@ export {
   Artist,
   Caption,
   Content,
-  TracksList,
-  TrackItem,
-  SpotifyLink,
   Footer,
 };

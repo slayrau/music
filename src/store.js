@@ -5,6 +5,7 @@ import review from 'src/slices/review';
 import search from 'src/slices/search';
 import album from 'src/slices/album';
 import artist from 'src/slices/artist';
+import playlist from 'src/slices/playlist';
 
 export default configureStore({
   reducer: {
@@ -13,5 +14,6 @@ export default configureStore({
     album,
     search,
     artist,
+    playlist,
   },
 });

@@ -10,6 +10,7 @@ import CategoriesPage from 'src/pages/categories-page';
 import SearchPage from 'src/pages/search-page';
 import AlbumPage from 'src/pages/album-page';
 import ArtistPage from 'src/pages/artist-page';
+import PlaylistPage from 'src/pages/playlist-page';
 
 const App = () => {
   const { loading, error } = useAuthorization();
@@ -27,6 +28,7 @@ const App = () => {
       <Route exact path="/search" component={SearchPage} />
       <Route exact path="/album/:albumId/:trackId?" component={AlbumPage} />
       <Route exact path="/artist/:artistId" component={ArtistPage} />
+      <Route exact path="/playlist/:playlistId" component={PlaylistPage} />
       <Redirect from="/" to="/review" />
     </div>
   );
