@@ -1,36 +1,54 @@
 import PropTypes from 'prop-types';
+import { IconType } from 'src/utils/constants';
 
 import { convertMsToUTCTime, getFormatedDuration } from 'src/utils/helpers/common';
+import { getAllArtists } from 'src/utils/helpers/media-card';
+import Icon from '../icon/icon';
 
-import { Wrapper, TrackNumber, Body, Name, Artists, Duration } from './style';
+import { TrackButton, TrackNumber, Body, Name, Artists, Duration } from './style';
 
-const Track = ({ trackNumber, name, artists, duration, accent }) => {
+const Track = ({ id, previewUrl, onTrackClick, trackNumber, name, artists, duration, playing, isPlayingTrack }) => {
   const convertedDuration = convertMsToUTCTime(duration);
   const formatedDuration = getFormatedDuration(convertedDuration);
+  const playingIcon = playing ? IconType.pause : IconType.play;
+  const notAllowedIcon = IconType.notAllowed;
 
   return (
-    <Wrapper accent={accent}>
-      <TrackNumber>{trackNumber}</TrackNumber>
+    <TrackButton
+      onClick={onTrackClick}
+      notAvailable={!previewUrl}
+      isPlayingTrack={isPlayingTrack}
+    >
+      <TrackNumber>
+        {isPlayingTrack
+          ? (
+            <Icon icon={previewUrl ? playingIcon : notAllowedIcon} />
+          ) : trackNumber}
+      </TrackNumber>
       <Body>
         <Name>{name}</Name>
-        {artists && <Artists>{artists.map((artist) => artist.name).join(', ')}</Artists>}
+        {artists && <Artists>{getAllArtists(artists)}</Artists>}
       </Body>
       <Duration>{formatedDuration}</Duration>
-    </Wrapper>
+    </TrackButton>
   );
 };
 
 Track.propTypes = {
+  id: PropTypes.string.isRequired,
+  onTrackClick: PropTypes.func.isRequired,
+  previewUrl: PropTypes.string,
   trackNumber: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
   artists: PropTypes.arrayOf(PropTypes.object),
-  accent: PropTypes.bool,
+  playing: PropTypes.bool.isRequired,
+  isPlayingTrack: PropTypes.bool.isRequired,
 };
 
 Track.defaultProps = {
   artists: null,
-  accent: false,
+  previewUrl: null,
 };
 
 export default Track;

@@ -8,4 +8,10 @@ export default {
   musicBeamNote: 'musicBeamNote',
   musicList: 'musicList',
   person: 'person',
+  play: 'play',
+  pause: 'pause',
+  forward: 'forward',
+  backward: 'backward',
+  xmark: 'xmark',
+  notAllowed: 'notAllowed',
 };

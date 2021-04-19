@@ -26,8 +26,6 @@ const PosterWrapper = styled.div`
 
 const LastReleasedAlbum = styled.section`
   position: relative;
-  display: flex;
-  flex-direction: column;
   padding: var(--gutter);
   padding-top: 0;
 

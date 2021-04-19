@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --gutter: 16px;
     --tab-bar-size: 50px;
+    --audio-player-size: 64px;
     --button-size: 44px;
     --icon-size: 24px;
 
@@ -49,12 +50,15 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    background-color: var(--background-primary);
+  }
+
   body {
     color: var(--label-color-primary);
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
     font-family: 'Open Sans', sans-serif;
-    background-color: var(--background-primary);
   }
 `;
 

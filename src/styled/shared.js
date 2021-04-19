@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
-import { textEllipsis, resetList } from 'src/styled/helpers';
+import { textEllipsis, resetList, resetButton } from 'src/styled/helpers';
 
 const Page = styled.div`
-  padding-bottom: var(--tab-bar-size);
+  padding-bottom: calc(var(--tab-bar-size) + var(--audio-player-size));
 `;
 
 const Title = styled.h1`

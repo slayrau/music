@@ -5,6 +5,8 @@ import { useAuthorization } from 'src/hooks';
 import TabBar from 'src/components/tab-bar';
 import LaunchScreen from 'src/components/launch-screen';
 
+import AudioPlayer from 'src/modules/audio-player';
+
 import ReviewPage from 'src/pages/review-page';
 import CategoriesPage from 'src/pages/categories-page';
 import SearchPage from 'src/pages/search-page';
@@ -22,6 +24,7 @@ const App = () => {
   return (
     <div>
       <TabBar />
+      <AudioPlayer />
 
       <Route exact path="/review" component={ReviewPage} />
       <Route exact path="/categories" component={CategoriesPage} />

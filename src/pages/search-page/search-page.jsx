@@ -163,7 +163,10 @@ const SearchPage = () => {
                       name={track.name}
                       subhead={cardHelpers.getAllArtists(track.artists)}
                       image={getLowResImage(track.images)}
-                      href={`/album/${track.albumId}/${track.id}`}
+                      href={{
+                        pathname: `/album/${track.albumId}`,
+                        state: track.id,
+                      }}
                     />
                   ))}
                 </MediaGrid>

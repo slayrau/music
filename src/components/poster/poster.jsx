@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { QueryType, IconType } from 'src/utils/constants';
@@ -19,6 +19,10 @@ const Poster = ({ src, alt, circle, placeholderType }) => {
   const handleError = () => {
     setImageError(true);
   };
+
+  useEffect(() => {
+    setImageError(!src);
+  }, [src]);
 
   return (
     <Wrapper className="poster" circle={circle}>

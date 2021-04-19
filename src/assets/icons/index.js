@@ -9,6 +9,12 @@ import { ReactComponent as MusicBeamNote } from './music-beam-note.svg';
 import { ReactComponent as MusicCrotchetNote } from './music-crotchet-note.svg';
 import { ReactComponent as MusicList } from './music-list.svg';
 import { ReactComponent as Person } from './person.svg';
+import { ReactComponent as Play } from './play.svg';
+import { ReactComponent as Pause } from './pause.svg';
+import { ReactComponent as Forward } from './forward.svg';
+import { ReactComponent as Backward } from './backward.svg';
+import { ReactComponent as Xmark } from './xmark.svg';
+import { ReactComponent as NotAllowed } from './not-allowed.svg';
 
 export default {
   [IconType.grid]: Grid,
@@ -20,4 +26,10 @@ export default {
   [IconType.musicBeamNote]: MusicBeamNote,
   [IconType.musicList]: MusicList,
   [IconType.person]: Person,
+  [IconType.play]: Play,
+  [IconType.pause]: Pause,
+  [IconType.forward]: Forward,
+  [IconType.backward]: Backward,
+  [IconType.xmark]: Xmark,
+  [IconType.notAllowed]: NotAllowed,
 };

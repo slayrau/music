@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 
-import { getAlbum, getAlbumTracks, selectAlbum, selectAlbumTracks } from 'src/slices/album';
+import { getAlbum, selectAlbum } from 'src/slices/album';
+import { setTracks, selectAudioPlayer, setPlayingTrack, setPlaying } from 'src/slices/audio-player';
 
 import { QueryType } from 'src/utils/constants';
 import { convertMsToUTCTime, getHumanReadableTime, getMediumResImage } from 'src/utils/helpers/common';
@@ -16,22 +17,49 @@ import { AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Art
 
 const AlbumPage = () => {
   const { albumId, trackId } = useParams();
+  const location = useLocation();
+  const { data, loading, error } = useSelector(selectAlbum);
+  const { playing, playingTrack } = useSelector(selectAudioPlayer);
   const dispatch = useDispatch();
-  const album = useSelector(selectAlbum);
-  const tracks = useSelector(selectAlbumTracks);
+
+  const handleTrackClick = (id) => {
+    const clickedTrack = data.tracks.find((track) => track.id === id);
+
+    if (id !== playingTrack.id) {
+      dispatch(setTracks(data.tracks));
+      dispatch(setPlayingTrack(clickedTrack));
+      dispatch(setPlaying(true));
+    }
+
+    if (id === playingTrack.id) {
+      dispatch(setPlaying(!playing));
+    }
+  };
 
   useEffect(() => {
     dispatch(getAlbum(albumId));
-    dispatch(getAlbumTracks(albumId));
-  }, []);
+  }, [dispatch, albumId]);
 
-  if (album.loading || tracks.loading) {
+  useEffect(() => {
+    const trackIdInState = location.state;
+    const stateTrack = data.tracks.find((track) => track.id === trackIdInState);
+
+    if (!trackIdInState || !stateTrack) return;
+
+    console.log(stateTrack);
+
+    dispatch(setTracks(data.tracks));
+    dispatch(setPlayingTrack(stateTrack));
+    dispatch(setPlaying(true));
+  }, [dispatch, location, albumId, data.tracks]);
+
+  if (loading) {
     return <ScreenSpinner />;
   }
 
-  const { name, releaseDate, totalTracks, spotifyUrl, images, artists, copyrights } = album.data;
+  const { name, releaseDate, totalTracks, spotifyUrl, images, artists, copyrights } = data.album;
 
-  const totalTracksMs = tracks.data.items.reduce((acc, track) => { acc += track.durationMs; return acc; }, 0);
+  const totalTracksMs = data.tracks.reduce((acc, track) => { acc += track.durationMs; return acc; }, 0);
   const totalTracksTime = convertMsToUTCTime(totalTracksMs);
   const albumDuration = getHumanReadableTime(totalTracksTime);
 
@@ -79,15 +107,18 @@ const AlbumPage = () => {
 
         <Content>
           <TracksList>
-            {tracks.data.items.map((track) => (
+            {data.tracks.map((track) => (
               <TrackItem key={track.id}>
                 <Track
                   id={track.id}
+                  previewUrl={track.previewUrl}
                   trackNumber={track.trackNumber}
                   name={track.name}
                   artists={track.artists}
                   duration={track.durationMs}
-                  accent={track.id === trackId}
+                  onTrackClick={() => handleTrackClick(track.id)}
+                  playing={playing}
+                  isPlayingTrack={track.id === playingTrack?.id}
                 />
               </TrackItem>
             ))}

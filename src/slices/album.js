@@ -8,21 +8,23 @@ const getAlbum = createAsyncThunk('album/getAlbum', async (albumId, thunkApi) =>
   const credentials = getCredentials(thunkApi);
   const response = await AlbumApi.getAlbum(albumId, credentials);
 
-  return normalizeAlbum(response.data);
-});
-
-const getAlbumTracks = createAsyncThunk('album/getAlbumTracks', async (albumId, thunkApi) => {
-  const credentials = getCredentials(thunkApi);
-  const response = await AlbumApi.getAlbumTracks(albumId, credentials);
+  const album = normalizeAlbum(response.data);
+  const tracks = response.data.tracks.items.map((track) => ({
+    ...normalizeTrack(track),
+    albumId: album.id,
+    albumName: album.name,
+    images: album.images,
+  }));
 
   return {
-    items: response.data.items.map(normalizeTrack),
+    album,
+    tracks,
   };
 });
 
 const initialState = {
-  album: {
-    data: {
+  data: {
+    album: {
       id: '',
       uri: '',
       type: '',
@@ -35,16 +37,10 @@ const initialState = {
       images: [],
       copyrights: [],
     },
-    loading: true,
-    error: null,
+    tracks: [],
   },
-  tracks: {
-    data: {
-      items: [],
-    },
-    loading: true,
-    error: null,
-  },
+  loading: true,
+  error: null,
 };
 
 const albumSlice = createSlice({
@@ -52,35 +48,21 @@ const albumSlice = createSlice({
   initialState,
   extraReducers: {
     [getAlbum.pending]: (state) => {
-      state.album.loading = true;
+      state.loading = true;
     },
     [getAlbum.fulfilled]: (state, action) => {
-      state.album.data = action.payload;
-      state.album.loading = false;
-      state.album.error = null;
+      state.data = action.payload;
+      state.loading = false;
+      state.error = null;
     },
     [getAlbum.rejected]: (state, action) => {
-      state.album.error = action.error;
-      state.album.loading = false;
-    },
-
-    [getAlbumTracks.pending]: (state) => {
-      state.tracks.loading = true;
-    },
-    [getAlbumTracks.fulfilled]: (state, action) => {
-      state.tracks.data = action.payload;
-      state.tracks.loading = false;
-      state.tracks.error = null;
-    },
-    [getAlbumTracks.rejected]: (state, action) => {
-      state.tracks.error = action.error;
-      state.tracks.loading = false;
+      state.error = action.error;
+      state.loading = false;
     },
   },
 });
 
-const selectAlbum = (state) => state.album.album;
-const selectAlbumTracks = (state) => state.album.tracks;
+const selectAlbum = (state) => state.album;
 
-export { getAlbum, getAlbumTracks, selectAlbum, selectAlbumTracks };
+export { getAlbum, selectAlbum };
 export default albumSlice.reducer;

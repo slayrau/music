@@ -91,7 +91,10 @@ const ArtistPage = () => {
                 name={track.name}
                 subhead={track.albumName}
                 image={getLowResImage(track.images)}
-                href={`/album/${track.albumId}/${track.id}`}
+                href={{
+                  pathname: `/album/${track.albumId}`,
+                  state: track.id,
+                }}
               />
             ))}
           </MediaGrid>

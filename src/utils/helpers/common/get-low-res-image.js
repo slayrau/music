@@ -1,4 +1,4 @@
-export default (imagesArray) => {
+export default (imagesArray = []) => {
   const imagesCount = imagesArray.length;
 
   if (!imagesCount) {

@@ -12,7 +12,10 @@ export default (card) => {
   }
 
   if (queryType === QueryType.track) {
-    return `/album/${albumId}/${id}`;
+    return {
+      pathname: `/album/${albumId}`,
+      state: id,
+    };
   }
 
   if (queryType === QueryType.playlist) {

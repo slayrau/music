@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { getPlaylist, selectPlaylist } from 'src/slices/playlist';
+import { setPlayingTrack, setTracks, setPlaying, selectAudioPlayer } from 'src/slices/audio-player';
 
 import { CardType } from 'src/utils/constants';
 import { getHighResImage } from 'src/utils/helpers/common';
@@ -18,6 +19,21 @@ const PlaylistPage = () => {
   const { playlistId } = useParams();
   const dispatch = useDispatch();
   const playlist = useSelector(selectPlaylist);
+  const { playing, playingTrack } = useSelector(selectAudioPlayer);
+
+  const handleTrackClick = (trackId) => {
+    const clickedTrack = playlist.tracks.find((track) => track.id === trackId);
+
+    if (trackId !== playingTrack.id) {
+      dispatch(setTracks(playlist.tracks));
+      dispatch(setPlayingTrack(clickedTrack));
+      dispatch(setPlaying(true));
+    }
+
+    if (trackId === playingTrack.id) {
+      dispatch(setPlaying(!playing));
+    }
+  };
 
   useEffect(() => {
     dispatch(getPlaylist(playlistId));
@@ -26,8 +42,6 @@ const PlaylistPage = () => {
   if (playlist.loading) {
     return <ScreenSpinner />;
   }
-
-  console.log(playlist);
 
   return (
     <Page>
@@ -49,9 +63,13 @@ const PlaylistPage = () => {
                   key={track.id}
                   id={track.id}
                   trackNumber={index + 1}
+                  previewUrl={track.previewUrl}
                   name={track.name}
                   artists={track.artists}
                   duration={track.durationMs}
+                  onTrackClick={() => handleTrackClick(track.id)}
+                  playing={playing}
+                  isPlayingTrack={track.id === playingTrack?.id}
                 />
               </TrackItem>
             ))}
