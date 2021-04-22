@@ -15,6 +15,7 @@ import {
 
 import { QueryType, CardType } from 'src/utils/constants';
 import { getMediumResImage, getLowResImage } from 'src/utils/helpers/common';
+import { albumsBreakpoints, tracksBreakpoints, similarArtistsBreakpoints } from 'src/utils/configs/breakpoints';
 
 import Poster from 'src/components/poster';
 import MediaGrid from 'src/components/media-grid';
@@ -78,8 +79,7 @@ const ArtistPage = () => {
         {!!topTracks.data.items.length && (
           <MediaGrid
             title="Top Tracks"
-            rows={5}
-            columns={1}
+            breakpoints={tracksBreakpoints}
             rowSeparator
           >
             {topTracks.data.items.map((track) => (
@@ -103,8 +103,7 @@ const ArtistPage = () => {
         {!!albums.data.items.length && (
           <MediaGrid
             title="Alumbs & EPs"
-            rows={2}
-            columns={2}
+            breakpoints={albumsBreakpoints}
           >
             {albums.data.items.map((album) => (
               <MediaCard
@@ -124,8 +123,7 @@ const ArtistPage = () => {
         {!!relatedArtists.data.items.length && (
           <MediaGrid
             title="Similar Artists"
-            rows={1}
-            columns={3}
+            breakpoints={similarArtistsBreakpoints}
           >
             {relatedArtists.data.items.map((relatedArtist) => (
               <MediaCard

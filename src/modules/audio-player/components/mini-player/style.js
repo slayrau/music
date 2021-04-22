@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import { resetButton, textEllipsis } from 'src/styled/helpers';
 
 const MiniPlayerContainer = styled.div`
@@ -13,6 +13,12 @@ const MiniPlayerContainer = styled.div`
   background-color: var(--background-primary);
   box-shadow: 0 1px 0 var(--background-separator), inset 0 1px 0 var(--background-separator);
   z-index: 150;
+
+  ${({ isLargeMedia }) => isLargeMedia && css`
+    top: 0;
+    left: 180px;
+    right: 0;
+  `}
 `;
 
 const TrackName = styled.h3`

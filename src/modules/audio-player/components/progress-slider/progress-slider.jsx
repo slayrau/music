@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
 
@@ -11,7 +10,6 @@ const ProgressSlider = ({
   duration,
   loadedSeconds,
   playedSeconds,
-  onChangeProgress,
   onSeekStart,
   onSeekEnd,
   onSeekChange,
@@ -23,14 +21,6 @@ const ProgressSlider = ({
 
   const currentTime = getFormated(playedSeconds);
   const remaining = getFormated(duration - playedSeconds);
-
-  const handleChange = (value) => {
-
-  };
-
-  const handleAfterChange = (value) => {
-
-  };
 
   return (
     <ProgressContainer>
@@ -61,7 +51,6 @@ ProgressSlider.propTypes = {
   duration: PropTypes.number.isRequired,
   loadedSeconds: PropTypes.number.isRequired,
   playedSeconds: PropTypes.number.isRequired,
-  onChangeProgress: PropTypes.func.isRequired,
   onSeekStart: PropTypes.func.isRequired,
   onSeekEnd: PropTypes.func.isRequired,
   onSeekChange: PropTypes.func.isRequired,

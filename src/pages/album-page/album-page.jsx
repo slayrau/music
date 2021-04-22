@@ -4,6 +4,8 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 
 import { getAlbum, selectAlbum } from 'src/slices/album';
 import { setTracks, selectAudioPlayer, setPlayingTrack, setPlaying } from 'src/slices/audio-player';
+import { useBreakpointsContext } from 'src/contexts/breakpoints';
+import { useMediaContext } from 'src/contexts/media';
 
 import { QueryType } from 'src/utils/constants';
 import { convertMsToUTCTime, getHumanReadableTime, getMediumResImage } from 'src/utils/helpers/common';
@@ -13,10 +15,13 @@ import Poster from 'src/components/poster';
 import Track from 'src/components/track';
 
 import { Page, Main, TracksList, TrackItem, SpotifyLink } from 'src/styled/shared';
-import { AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Artist, Caption, Content, Footer } from './style';
+import { PageContent, AlbumHeader, PosterWrapper, Name, MetaData, Row, ArtistsList, Item, Artist, Caption, Content, Footer } from './style';
 
 const AlbumPage = () => {
-  const { albumId, trackId } = useParams();
+  const isLargeMedia = useMediaContext();
+  const currentBreakpoint = useBreakpointsContext();
+
+  const { albumId } = useParams();
   const location = useLocation();
   const { data, loading, error } = useSelector(selectAlbum);
   const { playing, playingTrack } = useSelector(selectAudioPlayer);
@@ -46,8 +51,6 @@ const AlbumPage = () => {
 
     if (!trackIdInState || !stateTrack) return;
 
-    console.log(stateTrack);
-
     dispatch(setTracks(data.tracks));
     dispatch(setPlayingTrack(stateTrack));
     dispatch(setPlaying(true));
@@ -66,80 +69,85 @@ const AlbumPage = () => {
   return (
     <Page>
       <Main>
-        <AlbumHeader>
-          <PosterWrapper>
-            <Poster src={getMediumResImage(images)} placeholderType={QueryType.album} />
-          </PosterWrapper>
+        <PageContent
+          isLargeMedia={isLargeMedia}
+          breakpoint={currentBreakpoint}
+        >
+          <AlbumHeader>
+            <PosterWrapper>
+              <Poster src={getMediumResImage(images)} placeholderType={QueryType.album} />
+            </PosterWrapper>
 
-          <MetaData>
-            <Row>
-              <Name>{name}</Name>
-            </Row>
+            <MetaData>
+              <Row>
+                <Name>{name}</Name>
+              </Row>
 
-            <Row>
-              <ArtistsList>
-                {artists.map((artist) => (
-                  <Item key={artist.id}>
-                    <Artist
-                      as={Link}
-                      to={`/artist/${artist.id}`}
-                    >
-                      {artist.name}
-                    </Artist>
-                  </Item>
-                ))}
-              </ArtistsList>
-            </Row>
+              <Row>
+                <ArtistsList>
+                  {artists.map((artist) => (
+                    <Item key={artist.id}>
+                      <Artist
+                        as={Link}
+                        to={`/artist/${artist.id}`}
+                      >
+                        {artist.name}
+                      </Artist>
+                    </Item>
+                  ))}
+                </ArtistsList>
+              </Row>
 
-            <Row>
-              <Caption>Released {new Date(releaseDate).getFullYear()}</Caption>
-            </Row>
+              <Row>
+                <Caption>Released {new Date(releaseDate).getFullYear()}</Caption>
+              </Row>
 
-            <Row>
-              <Caption>{totalTracks} Songs</Caption>
-            </Row>
+              <Row>
+                <Caption>{totalTracks} Songs</Caption>
+              </Row>
 
-            <Row>
-              <Caption>{albumDuration}</Caption>
-            </Row>
-          </MetaData>
-        </AlbumHeader>
+              <Row>
+                <Caption>{albumDuration}</Caption>
+              </Row>
+            </MetaData>
+          </AlbumHeader>
 
-        <Content>
-          <TracksList>
-            {data.tracks.map((track) => (
-              <TrackItem key={track.id}>
-                <Track
-                  id={track.id}
-                  previewUrl={track.previewUrl}
-                  trackNumber={track.trackNumber}
-                  name={track.name}
-                  artists={track.artists}
-                  duration={track.durationMs}
-                  onTrackClick={() => handleTrackClick(track.id)}
-                  playing={playing}
-                  isPlayingTrack={track.id === playingTrack?.id}
-                />
-              </TrackItem>
+          <Content>
+            <TracksList>
+              {data.tracks.map((track) => (
+                <TrackItem key={track.id}>
+                  <Track
+                    id={track.id}
+                    previewUrl={track.previewUrl}
+                    trackNumber={track.trackNumber}
+                    name={track.name}
+                    artists={track.artists}
+                    duration={track.durationMs}
+                    onTrackClick={() => handleTrackClick(track.id)}
+                    playing={playing}
+                    isPlayingTrack={track.id === playingTrack?.id}
+                  />
+                </TrackItem>
+              ))}
+            </TracksList>
+          </Content>
+
+          <Footer>
+            {copyrights.map((cr) => (
+              <Row key={cr.type}>
+                <Caption>{cr.text}</Caption>
+              </Row>
             ))}
-          </TracksList>
-        </Content>
 
-        <Footer>
-          {copyrights.map((cr) => (
-            <Row key={cr.type}>
-              <Caption>{cr.text}</Caption>
-            </Row>
-          ))}
-
-          <SpotifyLink
-            href={spotifyUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Available on Spotify
-          </SpotifyLink>
-        </Footer>
+            <SpotifyLink
+              href={spotifyUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Available on Spotify
+            </SpotifyLink>
+          </Footer>
+        </PageContent>
       </Main>
     </Page>
   );

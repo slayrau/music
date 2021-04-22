@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getNewReleases, getFeaturedPlaylists, selectNewReleases, selectFeaturedPlaylists } from 'src/slices/review';
+
 import { CardType } from 'src/utils/constants';
 import { getAllArtists } from 'src/utils/helpers/media-card';
 import { getMediumResImage } from 'src/utils/helpers/common';
+import { albumsBreakpoints, playlistsBreakpoints } from 'src/utils/configs/breakpoints';
 
 import MediaGrid from 'src/components/media-grid';
 import MediaCard from 'src/components/media-card';
@@ -37,6 +39,7 @@ const ReviewPage = () => {
           title="New Releases"
           rows={2}
           columns={2}
+          breakpoints={albumsBreakpoints}
         >
           {newReleases.data.items.map((album) => (
             <MediaCard
@@ -54,8 +57,7 @@ const ReviewPage = () => {
 
         <MediaGrid
           title={featuredPlaylists.data.message}
-          rows={1}
-          columns={2}
+          breakpoints={playlistsBreakpoints}
         >
           {featuredPlaylists.data.items.map((playlist) => (
             <MediaCard

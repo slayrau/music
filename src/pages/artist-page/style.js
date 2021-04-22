@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 
 const Header = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
   padding: var(--gutter);
   background: linear-gradient(180deg, var(--background-primary), var(--background-secondary));
 `;
@@ -17,6 +17,9 @@ const StyledTitle = styled.h1`
 `;
 
 const PosterWrapper = styled.div`
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
   padding: calc(var(--gutter) * 4);
 
   .poster {
@@ -37,6 +40,10 @@ const LastReleasedAlbum = styled.section`
     right: var(--gutter);
     height: 1px;
     background-color: var(--background-separator);
+  }
+
+  .poster {
+    
   }
 `;
 

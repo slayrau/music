@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { textEllipsis, resetList, resetButton } from 'src/styled/helpers';
 
 const Page = styled.div`
+  padding-top: var(--audio-player-size);
   padding-bottom: calc(var(--tab-bar-size) + var(--audio-player-size));
 `;
 

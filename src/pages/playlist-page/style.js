@@ -1,4 +1,10 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
+
+const PosterWrapper = styled.div`
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+`;
 
 const Info = styled.div`
   padding-top: calc(var(--gutter) / 2);
@@ -17,9 +23,14 @@ const Footer = styled.div`
   padding: calc(var(--gutter) * 2) var(--gutter);
 `;
 
+const PageContent = styled.div`
+`;
+
 export {
+  PosterWrapper,
   Info,
   Description,
   Content,
   Footer,
+  PageContent,
 };

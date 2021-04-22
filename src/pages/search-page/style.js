@@ -16,6 +16,10 @@ const Header = styled.div`
   background-color: var(--background-primary);
   border-bottom: 1px solid var(--background-separator);
   overflow: hidden;
+
+  ${({ isLargeMedia }) => isLargeMedia && css`
+    top: var(--audio-player-size);
+  `}
 `;
 
 const TabsList = styled.ul`

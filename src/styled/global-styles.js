@@ -3,6 +3,8 @@ import 'normalize.css';
 
 const GlobalStyles = createGlobalStyle`
   :root {
+    color-scheme: dark;
+    
     --gutter: 16px;
     --tab-bar-size: 50px;
     --audio-player-size: 64px;

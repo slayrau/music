@@ -1,11 +1,14 @@
+import { useMediaContext } from 'src/contexts/media';
 import IconType from 'src/utils/constants/icon-type';
 import Icon from 'src/components/icon';
 
 import { Header, Nav, List, Item, NavLink } from './style';
 
 const TabBar = () => {
+  const isLargeMedia = useMediaContext();
+
   return (
-    <Header>
+    <Header isLargeMedia={isLargeMedia}>
       <Nav>
         <List>
           <Item>

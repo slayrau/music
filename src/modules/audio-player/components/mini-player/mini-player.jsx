@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 
+import { useMediaContext } from 'src/contexts/media';
 import { IconType } from 'src/utils/constants';
 import Icon from 'src/components/icon';
 import Poster from 'src/components/poster';
@@ -17,10 +18,11 @@ const MiniPlayer = ({
   onPlay,
   onForward,
 }) => {
+  const isLargeMedia = useMediaContext();
   const playIcon = playing ? IconType.pause : IconType.play;
 
   return (
-    <MiniPlayerContainer>
+    <MiniPlayerContainer isLargeMedia={isLargeMedia}>
       <ModalButton
         onClick={onOpenModal}
         type="button"

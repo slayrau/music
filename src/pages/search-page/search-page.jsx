@@ -13,11 +13,13 @@ import {
   resetSearch,
 } from 'src/slices/search';
 
+import { useMediaContext } from 'src/contexts/media';
 import { useSearchParams } from 'src/hooks';
 
-import { CardType, QueryType } from 'src/utils/constants';
+import { CardType, QueryType, BreakpointType } from 'src/utils/constants';
 import { QueryTypeToSearchDataType, getLowResImage, getMediumResImage } from 'src/utils/helpers/common';
 import * as cardHelpers from 'src/utils/helpers/media-card';
+import { albumsBreakpoints, tracksBreakpoints, artistsBreakpoints, playlistsBreakpoints } from 'src/utils/configs/breakpoints';
 
 import SearchField from 'src/components/search-field';
 import MediaCard from 'src/components/media-card';
@@ -35,6 +37,7 @@ const searchTabs = [
 ];
 
 const SearchPage = () => {
+  const isLargeMedia = useMediaContext();
   useSearchParams();
 
   const { queryTerm, queryType, data, loading, error } = useSelector(selectSearch);
@@ -73,7 +76,7 @@ const SearchPage = () => {
   return (
     <Page>
       <Main>
-        <Header>
+        <Header isLargeMedia={isLargeMedia}>
           <SearchField />
 
           <TabsList>
@@ -108,11 +111,10 @@ const SearchPage = () => {
               {!!artists.items.length && (
                 <MediaGrid
                   title="Artists"
-                  rows={3}
-                  columns={1}
+                  breakpoints={artistsBreakpoints}
                   rowSeparator
                 >
-                  {artists.items.slice(0, 12).map((artist) => (
+                  {artists.items.map((artist) => (
                     <MediaCard
                       key={artist.id}
                       id={artist.id}
@@ -129,10 +131,11 @@ const SearchPage = () => {
               {!!albums.items.length > 0 && (
                 <MediaGrid
                   title="Albums"
+                  breakpoints={albumsBreakpoints}
                   rows={2}
                   columns={2}
                 >
-                  {albums.items.slice(0, 12).map((album) => (
+                  {albums.items.map((album) => (
                     <MediaCard
                       key={album.id}
                       id={album.id}
@@ -150,11 +153,12 @@ const SearchPage = () => {
               {!!tracks.items.length && (
                 <MediaGrid
                   title="Tracks"
+                  breakpoints={tracksBreakpoints}
                   rows={3}
                   columns={1}
                   rowSeparator
                 >
-                  {tracks.items.slice(0, 12).map((track) => (
+                  {tracks.items.map((track) => (
                     <MediaCard
                       key={track.id}
                       id={track.id}
@@ -175,10 +179,11 @@ const SearchPage = () => {
               {!!playlists.items.length && (
                 <MediaGrid
                   title="Playlists"
+                  breakpoints={playlistsBreakpoints}
                   rows={1}
                   columns={2}
                 >
-                  {playlists.items.slice(0, 6).map((playlist) => (
+                  {playlists.items.map((playlist) => (
                     <MediaCard
                       key={playlist.id}
                       id={playlist.id}

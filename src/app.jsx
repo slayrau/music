@@ -1,6 +1,7 @@
 import { Route, Redirect } from 'react-router-dom';
 
 import { useAuthorization } from 'src/hooks';
+import { useMediaContext } from 'src/contexts/media';
 
 import TabBar from 'src/components/tab-bar';
 import LaunchScreen from 'src/components/launch-screen';
@@ -14,7 +15,11 @@ import AlbumPage from 'src/pages/album-page';
 import ArtistPage from 'src/pages/artist-page';
 import PlaylistPage from 'src/pages/playlist-page';
 
+import { AppContainer } from './style';
+
 const App = () => {
+  const isLargeMedia = useMediaContext();
+
   const { loading, error } = useAuthorization();
 
   if (loading) {
@@ -22,7 +27,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <AppContainer isLargeMedia={isLargeMedia}>
       <TabBar />
       <AudioPlayer />
 
@@ -33,7 +38,7 @@ const App = () => {
       <Route exact path="/artist/:artistId" component={ArtistPage} />
       <Route exact path="/playlist/:playlistId" component={PlaylistPage} />
       <Redirect from="/" to="/review" />
-    </div>
+    </AppContainer>
   );
 };
 

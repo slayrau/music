@@ -113,7 +113,7 @@ const Card = styled.a`
     if ($cardType === CardType.release) {
       return css`
         grid-auto-flow: column;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(48px, 1fr) 4fr;
         grid-column-gap: var(--gutter);
         align-items: center;
 

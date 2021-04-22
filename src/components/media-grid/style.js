@@ -24,21 +24,35 @@ const Section = styled.section`
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(${(props) => props.rows}, 1fr);
-    padding: 0 var(--gutter);
+    
+    ${({ isLargeMedia }) => !isLargeMedia && css`
+      padding: 0 var(--gutter);
+    `}
+
+    ${({ isLargeMedia }) => isLargeMedia && css`
+      padding: 0 var(--gutter);
+    `}
   }
 
   .swiper-slide {
     position: relative;
     margin-top: 0 !important;
     padding: calc(var(--gutter) / 2) 0;
-    padding-right: calc(var(--gutter) * 2);
+
+    ${({ isLargeMedia }) => !isLargeMedia && css`
+      padding-right: calc(var(--gutter) * 2);
+    `}
+
+    ${({ isLargeMedia }) => isLargeMedia && css`
+      padding-right: calc(var(--gutter) * 2);
+    `}
+
 
     ${(props) => props.rowSeparator && css`
       &:not(:nth-child(${props.rows}n))::after {
         content: '';
         position: absolute;
         bottom: 0;
-        /* left: calc(48px + var(--gutter)); */
         left: 0;
         right: calc(var(--gutter) * 2);
         height: 1px;

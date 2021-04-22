@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import ReactPlayer from 'react-player';
 
-import { selectAudioPlayer, setPlaying, setPlayingTrack } from 'src/slices/audio-player';
+import { useMediaContext } from 'src/contexts/media';
+import { useOnOutsideClick } from 'src/hooks';
 
 import { IconType } from 'src/utils/constants';
 import { getHighResImage, getLowResImage } from 'src/utils/helpers/common';
@@ -20,6 +21,10 @@ import TrackList from './components/track-list';
 import Tabs from './components/tabs';
 
 import {
+  ModalRow,
+  AudioPlayerContainer,
+  ModalPlayerControlsWrapper,
+  ModalInfoContainer,
   PlayerModal,
   ModalHeader,
   ModalPosterWrapper,
@@ -48,6 +53,7 @@ const Tab = {
 };
 
 const AudioPlayer = () => {
+  const isLargeMedia = useMediaContext();
   const [activeTab, setActiveTab] = useState(Tab.player.id);
   const [modalOpen, setModalOpen] = useState(false);
   const modalRef = useRef();
@@ -81,6 +87,10 @@ const AudioPlayer = () => {
     handleTrackListItemButtonClick,
   } = useAudio();
 
+  useOnOutsideClick(modalRef, () => {
+    setModalOpen(false);
+  });
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -93,15 +103,15 @@ const AudioPlayer = () => {
   useEffect(() => {
     const modal = modalRef.current;
 
-    if (modalOpen) {
+    if (modalOpen && !isLargeMedia) {
       disableBodyScroll(modal);
     } else {
       clearAllBodyScrollLocks();
     }
-  }, [modalRef, modalOpen, activeTab]);
+  }, [modalRef, modalOpen, isLargeMedia, activeTab]);
 
   return (
-    <div>
+    <AudioPlayerContainer>
       <ReactPlayer
         ref={audioRef}
         url={playingTrack.previewUrl}
@@ -130,7 +140,7 @@ const AudioPlayer = () => {
       />
 
       {modalOpen && (
-        <PlayerModal ref={modalRef}>
+        <PlayerModal ref={modalRef} isLargeMedia={isLargeMedia}>
           <ModalHeader>
             <CloseModalButton onClick={handleCloseModal} type="button">
               <Icon icon={IconType.xmark} />
@@ -139,51 +149,57 @@ const AudioPlayer = () => {
 
           <ModalContent>
             {activeTab === Tab.player.id && (
-              <>
+              <ModalPlayerControlsWrapper>
                 <ModalPosterWrapper>
                   <Poster src={getHighResImage(playingTrack.images)} placeholderType="track" />
                 </ModalPosterWrapper>
 
-                <TrackName>{playingTrack.name}</TrackName>
+                <ModalInfoContainer>
+                  <ModalRow>
+                    <TrackName>{playingTrack.name}</TrackName>
 
-                <ArtistsList>
-                  {playingTrack.artists.map((artist) => (
-                    <ArtistItem key={artist.id}>
-                      <Artist
-                        as={Link}
-                        onClick={handleCloseModal}
-                        to={`/artist/${artist.id}`}
-                      >
-                        {artist.name}
-                      </Artist>
-                    </ArtistItem>
-                  ))}
-                </ArtistsList>
+                    <ArtistsList>
+                      {playingTrack.artists.map((artist) => (
+                        <ArtistItem key={artist.id}>
+                          <Artist
+                            as={Link}
+                            onClick={handleCloseModal}
+                            to={`/artist/${artist.id}`}
+                          >
+                            {artist.name}
+                          </Artist>
+                        </ArtistItem>
+                      ))}
+                    </ArtistsList>
+                  </ModalRow>
 
-                <ProgressSliderWrapper>
-                  <ProgressSlider
-                    playingTrackAvailable={playingTrackAvailable}
-                    duration={duration}
-                    loadedSeconds={loadedSeconds}
-                    playedSeconds={playedSeconds}
-                    onChangeProgress={handleChangeSliderProgress}
-                    onSeekStart={handleSeekStart}
-                    onSeekEnd={handleSeekEnd}
-                    onSeekChange={handleChangeSeek}
-                  />
-                </ProgressSliderWrapper>
+                  <ModalRow>
+                    <ProgressSliderWrapper>
+                      <ProgressSlider
+                        playingTrackAvailable={playingTrackAvailable}
+                        duration={duration}
+                        loadedSeconds={loadedSeconds}
+                        playedSeconds={playedSeconds}
+                        onChangeProgress={handleChangeSliderProgress}
+                        onSeekStart={handleSeekStart}
+                        onSeekEnd={handleSeekEnd}
+                        onSeekChange={handleChangeSeek}
+                      />
+                    </ProgressSliderWrapper>
 
-                <PlaybackControl
-                  playing={playing}
-                  playingTrackId={playingTrack.id}
-                  playingTrackAvailable={playingTrackAvailable}
-                  prevTrackExist={prevTrackExist}
-                  nextTrackExist={nextTrackExist}
-                  onPlay={handlePlay}
-                  onBackward={handleBackward}
-                  onForward={handleForward}
-                />
-              </>
+                    <PlaybackControl
+                      playing={playing}
+                      playingTrackId={playingTrack.id}
+                      playingTrackAvailable={playingTrackAvailable}
+                      prevTrackExist={prevTrackExist}
+                      nextTrackExist={nextTrackExist}
+                      onPlay={handlePlay}
+                      onBackward={handleBackward}
+                      onForward={handleForward}
+                    />
+                  </ModalRow>
+                </ModalInfoContainer>
+              </ModalPlayerControlsWrapper>
             )}
 
             {activeTab === Tab.tracklist.id && (
@@ -208,7 +224,7 @@ const AudioPlayer = () => {
           </ModalFooter>
         </PlayerModal>
       )}
-    </div>
+    </AudioPlayerContainer>
   );
 };
 
