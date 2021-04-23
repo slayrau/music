@@ -13,8 +13,8 @@ import ScreenSpinner from 'src/components/screen-spinner';
 import Poster from 'src/components/poster';
 import Track from 'src/components/track';
 
-import { Page, Header, Title, Main, TracksList, TrackItem, SpotifyLink } from 'src/styled/shared';
-import { PosterWrapper, Info, Description, Content, Footer, PageContent } from './style';
+import { Page, Main, TracksList, TrackItem, SpotifyLink } from 'src/styled/shared';
+import { Header, Title, PosterWrapper, Info, Description, Content, Footer, PageContent } from './style';
 
 const PlaylistPage = () => {
   const isLargeMedia = useMediaContext();
@@ -25,8 +25,6 @@ const PlaylistPage = () => {
 
   const handleTrackClick = (trackId) => {
     const clickedTrack = playlist.tracks.find((track) => track.id === trackId);
-
-    console.log(clickedTrack, trackId);
 
     if (trackId !== playingTrack.id) {
       dispatch(setTracks(playlist.tracks));
@@ -64,26 +62,22 @@ const PlaylistPage = () => {
 
           <Content>
             <TracksList>
-              {playlist.tracks.map((track, index) => {
-                console.log(track.id);
-
-                return (
-                  <TrackItem key={track.id + index}>
-                    <Track
-                      key={track.id}
-                      id={track.id}
-                      trackNumber={index + 1}
-                      previewUrl={track.previewUrl}
-                      name={track.name}
-                      artists={track.artists}
-                      duration={track.durationMs}
-                      onTrackClick={() => handleTrackClick(track.id)}
-                      playing={playing}
-                      isPlayingTrack={track.id === playingTrack?.id}
-                    />
-                  </TrackItem>
-                )
-              })}
+              {playlist.tracks.map((track, index) => (
+                <TrackItem key={track.id + index}>
+                  <Track
+                    key={track.id}
+                    id={track.id}
+                    trackNumber={index + 1}
+                    previewUrl={track.previewUrl}
+                    name={track.name}
+                    artists={track.artists}
+                    duration={track.durationMs}
+                    onTrackClick={() => handleTrackClick(track.id)}
+                    playing={playing}
+                    isPlayingTrack={track.id === playingTrack?.id}
+                  />
+                </TrackItem>
+              ))}
             </TracksList>
           </Content>
 

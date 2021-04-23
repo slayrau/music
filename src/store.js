@@ -6,6 +6,7 @@ import search from 'src/slices/search';
 import album from 'src/slices/album';
 import artist from 'src/slices/artist';
 import playlist from 'src/slices/playlist';
+import category from 'src/slices/category';
 import audioPlayer from 'src/slices/audio-player';
 
 export default configureStore({
@@ -16,6 +17,7 @@ export default configureStore({
     search,
     artist,
     playlist,
+    category,
     audioPlayer,
   },
 });

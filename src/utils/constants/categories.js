@@ -27,10 +27,6 @@ export default {
     id: 'party',
     name: 'Party',
   },
-  alternative: {
-    id: 'alternative',
-    name: 'Alternative',
-  },
   atHome: {
     id: 'at_home',
     name: 'At Home',
@@ -63,10 +59,6 @@ export default {
     id: 'chill',
     name: 'Chill',
   },
-  throwback: {
-    id: 'throwback',
-    name: 'Throwback',
-  },
   caribbean: {
     id: 'caribbean',
     name: 'Caribbean',
@@ -74,6 +66,14 @@ export default {
   gaming: {
     id: 'gaming',
     name: 'Gaming',
+  },
+  inspirational: {
+    id: 'inspirational',
+    name: 'Christian',
+  },
+  decades: {
+    id: 'decades',
+    name: 'Decades',
   },
   sleep: {
     id: 'sleep',
@@ -87,17 +87,9 @@ export default {
     id: 'classical',
     name: 'Classical',
   },
-  sessions: {
-    id: 'sessions',
-    name: 'Spotify Singles',
-  },
   romance: {
     id: 'romance',
     name: 'Romance',
-  },
-  popculture: {
-    id: 'popculture',
-    name: 'Trending',
   },
   desi: {
     id: 'desi',
@@ -110,14 +102,6 @@ export default {
   instrumental: {
     id: 'instrumental',
     name: 'Instrumental',
-  },
-  radar: {
-    id: 'radar',
-    name: 'RADAR',
-  },
-  thirdparty: {
-    id: 'thirdparty',
-    name: 'Tastemakers',
   },
   afro: {
     id: 'afro',
@@ -139,17 +123,9 @@ export default {
     id: 'soul',
     name: 'Soul',
   },
-  comedy: {
-    id: 'comedy',
-    name: 'Comedy',
-  },
   roots: {
     id: 'roots',
     name: 'Folk & Acoustic',
-  },
-  student: {
-    id: 'student',
-    name: 'Student',
   },
   arab: {
     id: 'arab',
@@ -186,10 +162,6 @@ export default {
   funk: {
     id: 'funk',
     name: 'Funk',
-  },
-  listeningTogether: {
-    id: 'listening_together',
-    name: 'Listening Together',
   },
   summer: {
     id: 'summer',

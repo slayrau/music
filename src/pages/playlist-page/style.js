@@ -1,5 +1,16 @@
 import styled, { css } from 'styled-components/macro';
 
+const Header = styled.div`
+  padding: var(--gutter);
+`;
+
+const Title = styled.h1`
+  margin: 0;
+  margin-bottom: calc(var(--gutter) / 2);
+  font-size: var(--font-size-large-title);
+  line-height: var(--line-height-large-title);
+`;
+
 const PosterWrapper = styled.div`
   width: 100%;
   max-width: 320px;
@@ -24,9 +35,25 @@ const Footer = styled.div`
 `;
 
 const PageContent = styled.div`
+  ${({ isLargeMedia }) => isLargeMedia && css`
+    ${Header} {
+      display: flex;
+      align-items: center;
+    }
+
+    ${Info} {
+      margin-left: var(--gutter);
+    }
+
+    ${PosterWrapper} {
+      margin: 0;
+    }
+  `}
 `;
 
 export {
+  Header,
+  Title,
   PosterWrapper,
   Info,
   Description,

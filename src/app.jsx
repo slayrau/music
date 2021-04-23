@@ -32,7 +32,7 @@ const App = () => {
       <AudioPlayer />
 
       <Route exact path="/review" component={ReviewPage} />
-      <Route exact path="/categories" component={CategoriesPage} />
+      <Route exact path="/categories/:categoryId?" component={CategoriesPage} />
       <Route exact path="/search" component={SearchPage} />
       <Route exact path="/album/:albumId/:trackId?" component={AlbumPage} />
       <Route exact path="/artist/:artistId" component={ArtistPage} />
