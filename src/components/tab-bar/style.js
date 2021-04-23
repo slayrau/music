@@ -20,6 +20,12 @@ const NavLink = styled(RouterNavLink)`
   font-size: var(--font-size-footnote);
   line-height: var(--line-height-footnote);
   text-decoration: none;
+  border-radius: calc(var(--gutter) / 2);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
 
   &.active {
     color: var(--system-accent);

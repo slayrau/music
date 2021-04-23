@@ -26,8 +26,6 @@ const App = () => {
     return <LaunchScreen />;
   }
 
-  console.log('render app');
-
   return (
     <AppContainer isLargeMedia={isLargeMedia}>
       <TabBar />
@@ -36,10 +34,10 @@ const App = () => {
       <Route exact path="/review" component={ReviewPage} />
       <Route exact path="/categories/:categoryId?" component={CategoriesPage} />
       <Route exact path="/search" component={SearchPage} />
-      <Route exact path="/album/:albumId/:trackId?" component={AlbumPage} />
+      <Route exact path="/album/:albumId" component={AlbumPage} />
       <Route exact path="/artist/:artistId" component={ArtistPage} />
       <Route exact path="/playlist/:playlistId" component={PlaylistPage} />
-      <Redirect from="/" to="/review" />
+      <Redirect to="/review" />
     </AppContainer>
   );
 };

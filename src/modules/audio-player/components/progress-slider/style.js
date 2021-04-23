@@ -30,6 +30,11 @@ const SliderWrapper = styled.div`
     height: var(--gutter);
     border: none;
     box-shadow: 0 0 0 #fff;
+
+    &[data-focus-visible-added] {
+      box-shadow: 0 0 0 4px var(--system-accent);
+      background-color: var(--system-accent);
+    }
   }
 `;
 

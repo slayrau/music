@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import FocusLock from 'react-focus-lock';
 import ReactPlayer from 'react-player';
 
 import { useMediaContext } from 'src/contexts/media';
-import { useOnOutsideClick } from 'src/hooks';
+import { useOnOutsideClick, useOnKeypress } from 'src/hooks';
 
 import { IconType } from 'src/utils/constants';
 import { getHighResImage, getLowResImage } from 'src/utils/helpers/common';
@@ -91,6 +92,12 @@ const AudioPlayer = () => {
     setModalOpen(false);
   });
 
+  useOnKeypress('Escape', () => {
+    if (modalOpen) {
+      setModalOpen(false);
+    }
+  });
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -140,89 +147,91 @@ const AudioPlayer = () => {
       />
 
       {modalOpen && (
-        <PlayerModal ref={modalRef} isLargeMedia={isLargeMedia}>
-          <ModalHeader>
-            <CloseModalButton onClick={handleCloseModal} type="button">
-              <Icon icon={IconType.xmark} />
-            </CloseModalButton>
-          </ModalHeader>
+        <FocusLock>
+          <PlayerModal ref={modalRef} isLargeMedia={isLargeMedia}>
+            <ModalHeader>
+              <CloseModalButton onClick={handleCloseModal} type="button">
+                <Icon icon={IconType.xmark} />
+              </CloseModalButton>
+            </ModalHeader>
 
-          <ModalContent>
-            {activeTab === Tab.player.id && (
-              <ModalPlayerControlsWrapper>
-                <ModalPosterWrapper>
-                  <Poster src={getHighResImage(playingTrack.images)} placeholderType="track" />
-                </ModalPosterWrapper>
+            <ModalContent>
+              {activeTab === Tab.player.id && (
+                <ModalPlayerControlsWrapper>
+                  <ModalPosterWrapper>
+                    <Poster src={getHighResImage(playingTrack.images)} placeholderType="track" />
+                  </ModalPosterWrapper>
 
-                <ModalInfoContainer>
-                  <ModalRow>
-                    <TrackName>{playingTrack.name}</TrackName>
+                  <ModalInfoContainer>
+                    <ModalRow>
+                      <TrackName>{playingTrack.name}</TrackName>
 
-                    <ArtistsList>
-                      {playingTrack.artists.map((artist) => (
-                        <ArtistItem key={artist.id}>
-                          <Artist
-                            as={Link}
-                            onClick={handleCloseModal}
-                            to={`/artist/${artist.id}`}
-                          >
-                            {artist.name}
-                          </Artist>
-                        </ArtistItem>
-                      ))}
-                    </ArtistsList>
-                  </ModalRow>
+                      <ArtistsList>
+                        {playingTrack.artists.map((artist) => (
+                          <ArtistItem key={artist.id}>
+                            <Artist
+                              as={Link}
+                              onClick={handleCloseModal}
+                              to={`/artist/${artist.id}`}
+                            >
+                              {artist.name}
+                            </Artist>
+                          </ArtistItem>
+                        ))}
+                      </ArtistsList>
+                    </ModalRow>
 
-                  <ModalRow>
-                    <ProgressSliderWrapper>
-                      <ProgressSlider
+                    <ModalRow>
+                      <ProgressSliderWrapper>
+                        <ProgressSlider
+                          playingTrackAvailable={playingTrackAvailable}
+                          duration={duration}
+                          loadedSeconds={loadedSeconds}
+                          playedSeconds={playedSeconds}
+                          onChangeProgress={handleChangeSliderProgress}
+                          onSeekStart={handleSeekStart}
+                          onSeekEnd={handleSeekEnd}
+                          onSeekChange={handleChangeSeek}
+                        />
+                      </ProgressSliderWrapper>
+
+                      <PlaybackControl
+                        playing={playing}
+                        playingTrackId={playingTrack.id}
                         playingTrackAvailable={playingTrackAvailable}
-                        duration={duration}
-                        loadedSeconds={loadedSeconds}
-                        playedSeconds={playedSeconds}
-                        onChangeProgress={handleChangeSliderProgress}
-                        onSeekStart={handleSeekStart}
-                        onSeekEnd={handleSeekEnd}
-                        onSeekChange={handleChangeSeek}
+                        prevTrackExist={prevTrackExist}
+                        nextTrackExist={nextTrackExist}
+                        onPlay={handlePlay}
+                        onBackward={handleBackward}
+                        onForward={handleForward}
                       />
-                    </ProgressSliderWrapper>
+                    </ModalRow>
+                  </ModalInfoContainer>
+                </ModalPlayerControlsWrapper>
+              )}
 
-                    <PlaybackControl
-                      playing={playing}
-                      playingTrackId={playingTrack.id}
-                      playingTrackAvailable={playingTrackAvailable}
-                      prevTrackExist={prevTrackExist}
-                      nextTrackExist={nextTrackExist}
-                      onPlay={handlePlay}
-                      onBackward={handleBackward}
-                      onForward={handleForward}
-                    />
-                  </ModalRow>
-                </ModalInfoContainer>
-              </ModalPlayerControlsWrapper>
-            )}
+              {activeTab === Tab.tracklist.id && (
+                <TrackListWrapper>
+                  <TrackList
+                    playingTrackAvailable={playingTrackAvailable}
+                    playingTrackId={playingTrack.id}
+                    playing={playing}
+                    tracks={tracks}
+                    onTrackClick={handleTrackListItemButtonClick}
+                  />
+                </TrackListWrapper>
+              )}
+            </ModalContent>
 
-            {activeTab === Tab.tracklist.id && (
-              <TrackListWrapper>
-                <TrackList
-                  playingTrackAvailable={playingTrackAvailable}
-                  playingTrackId={playingTrack.id}
-                  playing={playing}
-                  tracks={tracks}
-                  onTrackClick={handleTrackListItemButtonClick}
-                />
-              </TrackListWrapper>
-            )}
-          </ModalContent>
-
-          <ModalFooter>
-            <Tabs
-              tabs={Object.values(Tab)}
-              activeTab={activeTab}
-              onTabClick={(event) => setActiveTab(event.target.id)}
-            />
-          </ModalFooter>
-        </PlayerModal>
+            <ModalFooter>
+              <Tabs
+                tabs={Object.values(Tab)}
+                activeTab={activeTab}
+                onTabClick={(event) => setActiveTab(event.target.id)}
+              />
+            </ModalFooter>
+          </PlayerModal>
+        </FocusLock>
       )}
     </AudioPlayerContainer>
   );

@@ -40,6 +40,11 @@ const ModalButton = styled.button`
   padding-left: var(--gutter);
   color: var(--label-color-primary);
   overflow: hidden;
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
 
   ${TrackName} {
     margin-left: var(--gutter);
@@ -63,6 +68,12 @@ const PlaybackButton = styled.button`
   width: calc(var(--gutter) * 4);
   height: 100%;
   color: var(--label-color-primary);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
+
 
   &:disabled {
     color: var(--label-color-tertiary);

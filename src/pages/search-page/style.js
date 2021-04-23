@@ -65,6 +65,10 @@ const TabButton = styled.button`
   white-space: nowrap;
   outline: none;
 
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent), inset 0 0 0 8px var(--background-secondary);
+  }
+
   ${(props) => props.isActive && css`
     color: var(--background-primary);
     background-color: var(--system-accent);
@@ -110,6 +114,12 @@ const LoadMoreButton = styled.button`
   color: var(--background-primary);
   background-color: var(--system-accent);
   border-radius: var(--gutter);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent), inset 0 0 0 4px var(--background-primary);
+  }
+
 
   &:disabled {
     background-color: transparent;

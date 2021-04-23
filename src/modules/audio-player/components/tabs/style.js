@@ -23,6 +23,10 @@ const TabButton = styled.button`
   color: var(--label-color-secondary);
   outline: none;
 
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
+
   ${({ isActive }) => isActive && css`
     color: var(--system-accent);
   `}

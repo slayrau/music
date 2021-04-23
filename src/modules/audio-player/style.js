@@ -86,6 +86,7 @@ const ModalHeader = styled.div`
     left: var(--gutter);
     right: var(--gutter);
     bottom: 0;
+    z-index: -1;
     height: 1px;
     background-color: var(--background-separator);
   }
@@ -97,6 +98,11 @@ const CloseModalButton = styled.button`
   width: var(--button-size);
   height: var(--button-size);
   margin-left: calc(var(--gutter) * -1);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
 
   .icon {
     color: var(--label-color-primary);
@@ -132,6 +138,12 @@ const ArtistItem = styled.li`
 const Artist = styled.a`
   color: var(--system-accent);
   text-decoration: none;
+
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 `;
 
 const ModalFooter = styled.div`

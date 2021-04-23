@@ -83,6 +83,12 @@ const ClearButton = styled.button`
   height: 36px;
 
   color: var(--label-color-primary);
+  border-radius: 50%;
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 `;
 
 const CancelButton = styled.button`
@@ -90,6 +96,11 @@ const CancelButton = styled.button`
 
   color: var(--system-accent);
   margin-left: var(--gutter);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 `;
 
 export {

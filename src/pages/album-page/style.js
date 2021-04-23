@@ -41,7 +41,12 @@ const Artist = styled.a`
   line-height: var(--line-height-title-1);
   text-align: center;
   text-decoration: none;
+  outline: none;
 
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
+  
   &:hover {
     text-decoration: underline;
   }

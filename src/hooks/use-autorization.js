@@ -1,16 +1,27 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import { authorize, selectAuth } from 'src/slices/auth';
 
+const routes = {
+  review: 'review',
+  album: 'album',
+  playlist: 'playlist',
+  categories: 'categories',
+  search: 'search',
+  artist: 'artist',
+};
+
 const useAuthorization = () => {
   const history = useHistory();
-  const location = useLocation();
+  const match = useRouteMatch('/:route');
+  const { pathname, search } = useLocation();
+  const { accessToken, loading, error } = useSelector(selectAuth);
   const dispatch = useDispatch();
 
-  const redirectUrlRef = useRef(location.pathname + location.search);
-  const { accessToken, loading, error } = useSelector(selectAuth);
+  const initialUrl = match?.params?.route ? (pathname + search) : routes.review;
+  const redirectUrlRef = useRef(initialUrl);
 
   useEffect(() => {
     dispatch(authorize());

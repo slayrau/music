@@ -62,6 +62,10 @@ const TrackButton = styled.button`
   border-radius: var(--gutter);
   outline: none;
 
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent), inset 0 0 0 4px var(--background-primary);
+  }
+
   ${({ notAvailable }) => notAvailable && css`
     ${TrackNumber} {
       color: var(--label-color-secondary);

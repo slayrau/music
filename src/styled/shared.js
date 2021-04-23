@@ -55,6 +55,11 @@ const TrackItem = styled.li`
 
 const SpotifyLink = styled.a`
   color: var(--system-accent);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 `;
 
 export {

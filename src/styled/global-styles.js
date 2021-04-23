@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components/macro';
 import 'normalize.css';
+import 'focus-visible';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -44,6 +45,10 @@ const GlobalStyles = createGlobalStyle`
     --background-separator: #323235;
 
     --system-accent: #1db954;
+  }
+
+  [data-js-focus-visible] :focus:not([data-focus-visible-added]) {
+    outline: none;
   }
 
   *,

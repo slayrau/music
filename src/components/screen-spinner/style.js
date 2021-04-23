@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
 const Screen = styled.div`
   position: fixed;
@@ -10,6 +10,10 @@ const Screen = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ isLargeScreen }) => isLargeScreen && css`
+    left: 180px;
+  `}
 `;
 
 const SpinnerWrapper = styled.div`

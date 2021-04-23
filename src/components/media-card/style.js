@@ -24,6 +24,12 @@ const Card = styled.a`
 
   color: var(--label-color-primary);
   text-decoration: none;
+  outline: none;
+  border-radius: calc(var(--gutter) / 2);
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 
   ${({ $cardType, $queryType }) => {
     if ($cardType === CardType.artist) {

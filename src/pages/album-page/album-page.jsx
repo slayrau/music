@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useHistory } from 'react-router-dom';
 
 import { getAlbum, selectAlbum } from 'src/slices/album';
 import { setTracks, selectAudioPlayer, setPlayingTrack, setPlaying } from 'src/slices/audio-player';
@@ -23,6 +23,7 @@ const AlbumPage = () => {
 
   const { albumId } = useParams();
   const location = useLocation();
+  const history = useHistory();
   const { data, loading, error } = useSelector(selectAlbum);
   const { playing, playingTrack } = useSelector(selectAudioPlayer);
   const dispatch = useDispatch();
@@ -42,8 +43,12 @@ const AlbumPage = () => {
   };
 
   useEffect(() => {
+    if (!albumId) {
+      history.replace('/review');
+    }
+
     dispatch(getAlbum(albumId));
-  }, [dispatch, albumId]);
+  }, [dispatch, albumId, history]);
 
   useEffect(() => {
     const trackIdInState = location.state;

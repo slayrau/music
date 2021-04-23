@@ -65,6 +65,11 @@ const BubbleLink = styled.a`
   text-decoration: none;
   background-color: var(--background-secondary);
   border-radius: calc(var(--gutter) / 2);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 
   .icon {
     margin-left: auto;
@@ -83,6 +88,11 @@ const ResetCategoryButton = styled.button`
   color: var(--system-accent);
   background-color: var(--background-secondary);
   border-radius: calc(var(--gutter) / 2);
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent);
+  }
 
   .icon {
     margin: auto;

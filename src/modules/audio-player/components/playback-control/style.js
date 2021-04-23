@@ -7,6 +7,12 @@ const PlaybackButton = styled.button`
   display: flex;
   color: var(--label-color-primary);
 
+  outline: none;
+
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 4px var(--system-accent);
+  }
+
   &:disabled {
     color: var(--label-color-tertiary);
   }

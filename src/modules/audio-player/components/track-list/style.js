@@ -38,6 +38,10 @@ const Track = styled.button`
   border-radius: calc(var(--gutter) / 2);
   outline: none;
 
+  &[data-focus-visible-added] {
+    box-shadow: 0 0 0 4px var(--system-accent), inset 0 0 0 4px var(--background-secondary);
+  }
+
   ${({ trackNotAvaliable }) => trackNotAvaliable && css`
     ${Name} {
       color: var(--label-color-secondary);
