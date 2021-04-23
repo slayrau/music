@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { IconType } from 'src/utils/constants';
 
 import { convertMsToUTCTime, getFormatedDuration } from 'src/utils/helpers/common';
 import { getAllArtists } from 'src/utils/helpers/media-card';
-import Icon from '../icon/icon';
+import Icon from 'src/components/icon';
 
 import { TrackButton, TrackNumber, Body, Name, Artists, Duration } from './style';
 
@@ -51,4 +52,4 @@ Track.defaultProps = {
   previewUrl: null,
 };
 
-export default Track;
+export default memo(Track);

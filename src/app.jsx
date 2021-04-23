@@ -26,6 +26,8 @@ const App = () => {
     return <LaunchScreen />;
   }
 
+  console.log('render app');
+
   return (
     <AppContainer isLargeMedia={isLargeMedia}>
       <TabBar />

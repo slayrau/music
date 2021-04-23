@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setQueryTerm, resetSearchData, selectSearch } from 'src/slices/search';
@@ -115,4 +115,4 @@ const SearchField = () => {
   );
 };
 
-export default SearchField;
+export default memo(SearchField);

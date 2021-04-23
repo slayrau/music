@@ -16,7 +16,7 @@ import {
 import { useMediaContext } from 'src/contexts/media';
 import { useSearchParams } from 'src/hooks';
 
-import { CardType, QueryType, BreakpointType } from 'src/utils/constants';
+import { CardType, QueryType } from 'src/utils/constants';
 import { QueryTypeToSearchDataType, getLowResImage, getMediumResImage } from 'src/utils/helpers/common';
 import * as cardHelpers from 'src/utils/helpers/media-card';
 import { albumsBreakpoints, tracksBreakpoints, artistsBreakpoints, playlistsBreakpoints } from 'src/utils/configs/breakpoints';

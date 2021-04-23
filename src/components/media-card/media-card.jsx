@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -56,4 +57,4 @@ MediaCard.defaultProps = {
   meta: '',
 };
 
-export default MediaCard;
+export default memo(MediaCard);

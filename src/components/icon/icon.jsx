@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import IconType from 'src/utils/constants/icon-type';
@@ -26,4 +27,4 @@ Icon.defaultProps = {
   className: '',
 };
 
-export default Icon;
+export default memo(Icon);

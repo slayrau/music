@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import ReactPlayer from 'react-player';
@@ -228,4 +228,4 @@ const AudioPlayer = () => {
   );
 };
 
-export default AudioPlayer;
+export default memo(AudioPlayer);
