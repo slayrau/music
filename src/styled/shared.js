@@ -1,9 +1,18 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import { textEllipsis, resetList, resetButton } from 'src/styled/helpers';
 
 const Page = styled.div`
-  padding-top: var(--audio-player-size);
-  padding-bottom: calc(var(--tab-bar-size) + var(--audio-player-size));
+  ${({ isLargeMedia }) => {
+    if (isLargeMedia) {
+      return css`
+        padding-top: var(--audio-player-size);
+      `;
+    }
+
+    return css`
+      padding-bottom: calc(var(--tab-bar-size) + var(--audio-player-size));
+    `;
+  }}
 `;
 
 const Title = styled.h1`

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { getPlaylist, selectPlaylist } from 'src/slices/playlist';
 import { setPlayingTrack, setTracks, setPlaying, selectAudioPlayer } from 'src/slices/audio-player';
@@ -19,6 +19,7 @@ import { Header, Title, PosterWrapper, Info, Description, Content, Footer, PageC
 const PlaylistPage = () => {
   const isLargeMedia = useMediaContext();
   const { playlistId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const playlist = useSelector(selectPlaylist);
   const { playing, playingTrack } = useSelector(selectAudioPlayer);
@@ -45,8 +46,13 @@ const PlaylistPage = () => {
     return <ScreenSpinner />;
   }
 
+  if (playlist.error) {
+    history.replace('/review');
+    return null;
+  }
+
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Main>
         <PageContent isLargeMedia={isLargeMedia}>
           <Header>

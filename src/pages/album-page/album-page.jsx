@@ -65,6 +65,11 @@ const AlbumPage = () => {
     return <ScreenSpinner />;
   }
 
+  if (error) {
+    history.replace('/review');
+    return null;
+  }
+
   const { name, releaseDate, totalTracks, spotifyUrl, images, artists, copyrights } = data.album;
 
   const totalTracksMs = data.tracks.reduce((acc, track) => { acc += track.durationMs; return acc; }, 0);
@@ -72,7 +77,7 @@ const AlbumPage = () => {
   const albumDuration = getHumanReadableTime(totalTracksTime);
 
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Main>
         <PageContent
           isLargeMedia={isLargeMedia}

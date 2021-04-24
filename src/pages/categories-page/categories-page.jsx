@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { resetCategory, getCategory, selectCategory } from 'src/slices/category';
+import { useMediaContext } from 'src/contexts/media';
 import { useBreakpointsContext } from 'src/contexts/breakpoints';
 
 import { CardType, categories, IconType } from 'src/utils/constants';
@@ -15,6 +16,7 @@ import { Page, Title, Main } from 'src/styled/shared';
 import { Header, GridList, Item, BubbleLink, ResetCategoryButton } from './style';
 
 const CategoriesPage = () => {
+  const isLargeMedia = useMediaContext();
   const currentBreakpoint = useBreakpointsContext();
   const { categoryId } = useParams();
   const history = useHistory();
@@ -36,7 +38,7 @@ const CategoriesPage = () => {
   }, [dispatch, categoryId]);
 
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Header>
         <Title>{currentCategory?.name || 'Categories'}</Title>
 

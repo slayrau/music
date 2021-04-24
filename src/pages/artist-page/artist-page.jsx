@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
   getArtist,
@@ -12,6 +12,7 @@ import {
   selectArtistTopTracks,
   selectRelatedArtists,
 } from 'src/slices/artist';
+import { useMediaContext } from 'src/contexts/media';
 
 import { QueryType, CardType } from 'src/utils/constants';
 import { getMediumResImage, getLowResImage } from 'src/utils/helpers/common';
@@ -26,8 +27,10 @@ import { Page, Main } from 'src/styled/shared';
 import { Header, StyledTitle, PosterWrapper, LastReleasedAlbum, LastReleasedAlbumTitle } from './style';
 
 const ArtistPage = () => {
+  const isLargeMedia = useMediaContext();
   const { artistId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const artist = useSelector(selectArtist);
   const albums = useSelector(selectArtistAlbums);
   const topTracks = useSelector(selectArtistTopTracks);
@@ -44,10 +47,15 @@ const ArtistPage = () => {
     return <ScreenSpinner />;
   }
 
+  if (artist.error) {
+    history.replace('/review');
+    return null;
+  }
+
   const lastReleasedAlbum = albums.data.items.slice().sort((a, b) => (a.releaseDate < b.releaseDate ? 1 : -1))[0];
 
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Header>
         <StyledTitle>{artist.data.name}</StyledTitle>
 

@@ -29,6 +29,8 @@ import PulseSpinner from 'src/components/pulse-spinner';
 import { Page, Main } from 'src/styled/shared';
 import { Header, TabsList, TabItem, TabButton, Content, SearchList, SearchItem, LoadMoreButtonWrapper, LoadMoreButton } from './style';
 
+import NotFound from './components/not-found';
+
 const searchTabs = [
   { id: QueryType.artist, name: 'Artists' },
   { id: QueryType.album, name: 'Albums' },
@@ -40,7 +42,7 @@ const SearchPage = () => {
   const isLargeMedia = useMediaContext();
   useSearchParams();
 
-  const { queryTerm, queryType, data, loading, error } = useSelector(selectSearch);
+  const { queryTerm, queryType, data, noResults, loading, error } = useSelector(selectSearch);
   const artists = useSelector(selectSearchArtists);
   const albums = useSelector(selectSearchAlbums);
   const tracks = useSelector(selectSearchTracks);
@@ -74,7 +76,7 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Main>
         <Header isLargeMedia={isLargeMedia}>
           <SearchField />
@@ -104,6 +106,10 @@ const SearchPage = () => {
             ))}
           </TabsList>
         </Header>
+
+        {(queryTerm && noResults) && (
+          <NotFound query={queryTerm} />
+        )}
 
         {!queryType
           ? (

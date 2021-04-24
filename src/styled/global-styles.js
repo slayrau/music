@@ -59,6 +59,7 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     background-color: var(--background-primary);
+    overflow-y: scroll;
   }
 
   body {

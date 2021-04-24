@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getNewReleases, getFeaturedPlaylists, selectNewReleases, selectFeaturedPlaylists } from 'src/slices/review';
+import { useMediaContext } from 'src/contexts/media';
 
 import { CardType } from 'src/utils/constants';
 import { getAllArtists } from 'src/utils/helpers/media-card';
@@ -15,6 +16,7 @@ import ScreenSpinner from 'src/components/screen-spinner';
 import { Page, Header, Title, Main } from 'src/styled/shared';
 
 const ReviewPage = () => {
+  const isLargeMedia = useMediaContext();
   const dispatch = useDispatch();
   const newReleases = useSelector(selectNewReleases);
   const featuredPlaylists = useSelector(selectFeaturedPlaylists);
@@ -29,7 +31,7 @@ const ReviewPage = () => {
   }
 
   return (
-    <Page>
+    <Page isLargeMedia={isLargeMedia}>
       <Header>
         <Title>Review</Title>
       </Header>

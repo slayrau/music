@@ -48,8 +48,11 @@ const normalizeSearchData = (data, queryType) => {
       next: playlists.next,
     };
 
+    const noResults = !normalizedArtists.items.length && !normalizedAlbums.items.length && !normalizedTracks.items.length && !normalizedPlaylists.items.length;
+
     return {
       responseType,
+      noResults,
       data: {
         artists: normalizedArtists,
         albums: normalizedAlbums,
@@ -61,9 +64,11 @@ const normalizeSearchData = (data, queryType) => {
 
   const normalizer = QueryTypeToNormalizer[queryType];
   const typedData = data[responseType];
+  const noResults = !typedData.items.length;
 
   return {
     responseType,
+    noResults,
     data: {
       items: typedData.items.map(normalizer),
       limit: typedData.limit,
@@ -95,6 +100,7 @@ const initialState = {
   queryType: '',
   loading: false,
   error: null,
+  noResults: false,
   data: {
     artists: {
       items: [],
@@ -141,9 +147,10 @@ const searchSlice = createSlice({
   extraReducers: {
     [getSearch.pending]: (state) => {
       state.loading = true;
+      state.noResults = false;
     },
     [getSearch.fulfilled]: (state, action) => {
-      const { data, responseType } = action.payload;
+      const { data, responseType, noResults } = action.payload;
 
       if (responseType) {
         state.data[responseType] = data;
@@ -151,6 +158,7 @@ const searchSlice = createSlice({
         state.data = data;
       }
 
+      state.noResults = noResults;
       state.loading = false;
       state.error = null;
     },
