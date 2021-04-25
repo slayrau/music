@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { textEllipsis, resetList, resetButton } from 'src/styled/helpers';
+import { textEllipsis, resetList } from 'src/styled/helpers';
 
 const Page = styled.div`
   ${({ isLargeMedia }) => {

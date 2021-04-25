@@ -8,7 +8,7 @@ import Poster from 'src/components/poster';
 import Icon from 'src/components/icon';
 import { Card, Body, Row, Name, Meta, Subhead } from './style';
 
-const MediaCard = ({ id, cardType, href, queryType, image, name, subhead, meta }) => {
+const MediaCard = ({ cardType, href, queryType, image, name, subhead, meta }) => {
   return (
     <Card
       as={Link}
@@ -43,7 +43,6 @@ const MediaCard = ({ id, cardType, href, queryType, image, name, subhead, meta }
 
 MediaCard.propTypes = {
   cardType: PropTypes.oneOf(Object.values(CardType)).isRequired,
-  id: PropTypes.string.isRequired,
   href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   queryType: PropTypes.oneOf(Object.values(QueryType)).isRequired,
   image: PropTypes.string.isRequired,

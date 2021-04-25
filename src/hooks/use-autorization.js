@@ -25,6 +25,7 @@ const useAuthorization = () => {
 
   useEffect(() => {
     dispatch(authorize());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

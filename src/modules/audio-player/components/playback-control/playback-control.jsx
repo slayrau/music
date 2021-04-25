@@ -58,13 +58,17 @@ const PlaybackControl = ({
 
 PlaybackControl.propTypes = {
   playing: PropTypes.bool.isRequired,
-  playingTrackId: PropTypes.string.isRequired,
+  playingTrackId: PropTypes.string,
   playingTrackAvailable: PropTypes.bool.isRequired,
   prevTrackExist: PropTypes.bool.isRequired,
   nextTrackExist: PropTypes.bool.isRequired,
   onPlay: PropTypes.func.isRequired,
   onBackward: PropTypes.func.isRequired,
   onForward: PropTypes.func.isRequired,
+};
+
+PlaybackControl.defaultProps = {
+  playingTrackId: null,
 };
 
 export default PlaybackControl;

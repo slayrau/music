@@ -24,6 +24,7 @@ const ReviewPage = () => {
   useEffect(() => {
     dispatch(getNewReleases());
     dispatch(getFeaturedPlaylists());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (newReleases.loading || featuredPlaylists.loading) {

@@ -20,7 +20,7 @@ import { AppContainer } from './style';
 const App = () => {
   const isLargeMedia = useMediaContext();
 
-  const { loading, error } = useAuthorization();
+  const { loading } = useAuthorization();
 
   if (loading) {
     return <LaunchScreen />;

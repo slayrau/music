@@ -8,7 +8,7 @@ import Icon from 'src/components/icon';
 
 import { TrackButton, TrackNumber, Body, Name, Artists, Duration } from './style';
 
-const Track = ({ id, previewUrl, onTrackClick, trackNumber, name, artists, duration, playing, isPlayingTrack }) => {
+const Track = ({ previewUrl, onTrackClick, trackNumber, name, artists, duration, playing, isPlayingTrack }) => {
   const convertedDuration = convertMsToUTCTime(duration);
   const formatedDuration = getFormatedDuration(convertedDuration);
   const playingIcon = playing ? IconType.pause : IconType.play;
@@ -36,7 +36,6 @@ const Track = ({ id, previewUrl, onTrackClick, trackNumber, name, artists, durat
 };
 
 Track.propTypes = {
-  id: PropTypes.string.isRequired,
   onTrackClick: PropTypes.func.isRequired,
   previewUrl: PropTypes.string,
   trackNumber: PropTypes.number.isRequired,

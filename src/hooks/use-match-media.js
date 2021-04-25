@@ -6,8 +6,8 @@ const useMatchMedia = (mediaPx) => {
 
   useEffect(() => {
     const listener = ({ matches }) => setMatched(matches);
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
+    media.addListener(listener);
+    return () => media.removeListener(listener);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

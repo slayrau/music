@@ -18,6 +18,7 @@ const useSearchParams = () => {
 
     dispatch(setQueryTerm(term));
     dispatch(setQueryType(type));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

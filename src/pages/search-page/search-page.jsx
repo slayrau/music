@@ -42,7 +42,7 @@ const SearchPage = () => {
   const isLargeMedia = useMediaContext();
   useSearchParams();
 
-  const { queryTerm, queryType, data, noResults, loading, error } = useSelector(selectSearch);
+  const { queryTerm, queryType, data, noResults, loading } = useSelector(selectSearch);
   const artists = useSelector(selectSearchArtists);
   const albums = useSelector(selectSearchAlbums);
   const tracks = useSelector(selectSearchTracks);
@@ -73,6 +73,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     return () => dispatch(resetSearch());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
